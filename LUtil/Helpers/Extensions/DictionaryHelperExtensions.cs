@@ -18,5 +18,17 @@ namespace LUtil.Helpers.Extensions {
             TKey key,
             Func<TKey, TValue> default_delegate
         ) => DictionaryHelper.GetOrDefault( dictionary, key, default_delegate );
+
+        /// <inheritdoc cref="DictionaryHelper.GetOrNull{TKey,TValue}"/>
+        public static TValue GetOrNull<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key
+        ) where TValue : class => DictionaryHelper.GetOrNull( dictionary, key );
+
+        /// <inheritdoc cref="DictionaryHelper.GetOrNullable{TKey,TValue}"/>
+        public static TValue? GetOrNullable<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key
+        ) where TValue : struct => DictionaryHelper.GetOrNullable( dictionary, key );
     }
 }

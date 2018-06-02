@@ -40,5 +40,27 @@ namespace LUtil.Test.Helpers {
             Assert.AreSame( c, d[2] );
             Assert.AreEqual( 2, d[2].Count );
         }
+
+        [TestMethod]
+        public void GetOrNull() {
+            var d = new Dictionary<int, string> {
+                { 1, "one" },
+                { 2, "two" }
+            };
+
+            Assert.AreEqual( "one", d.GetOrNull(1) );
+            Assert.IsNull( d.GetOrNull(3) );
+        }
+
+        [TestMethod]
+        public void GetOrNullable() {
+            var d = new Dictionary<string,int> {
+                { "one", 1 },
+                { "two", 2 }
+            };
+
+            Assert.AreEqual( 1, d.GetOrNullable( "one" ));
+            Assert.IsNull( d.GetOrNullable( "three" ));
+        }
     }
 }

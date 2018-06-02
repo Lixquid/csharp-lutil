@@ -80,5 +80,37 @@ namespace LUtil.Helpers {
             dictionary[key] = default_delegate( key );
             return dictionary[key];
         }
+
+        /// <summary>
+        ///     Returns the value at the specified key in the dictionary if it
+        ///     exists, otherwise returns <c>null</c>.
+        /// </summary>
+        /// <param name="dictionary">The dictionary to return the key at.</param>
+        /// <param name="key">The key to retreive the value from in the dictionary.</param>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <returns>The specified value at he key in the dictionary, <c>null</c> otherwise.</returns>
+        public static TValue GetOrNull<TKey, TValue>(
+            IDictionary<TKey, TValue> dictionary,
+            TKey key
+        ) where TValue : class {
+            return dictionary.ContainsKey( key ) ? dictionary[key] : null;
+        }
+
+        /// <summary>
+        ///     Returns the value at the specified key in the dictionary if it
+        ///     exists, otherwise returns <c>null</c>.
+        /// </summary>
+        /// <param name="dictionary">The dictionary to return the key at.</param>
+        /// <param name="key">The key to retreive the value from in the dictionary.</param>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <returns>The specified value at he key in the dictionary, <c>null</c> otherwise.</returns>
+        public static TValue? GetOrNullable<TKey, TValue>(
+            IDictionary<TKey, TValue> dictionary,
+            TKey key
+        ) where TValue : struct {
+            return dictionary.ContainsKey( key ) ? (TValue?)dictionary[key] : null;
+        }
     }
 }
