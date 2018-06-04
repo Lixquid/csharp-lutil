@@ -21,6 +21,17 @@ namespace LUtil.Test.Helpers {
         }
 
         [TestMethod]
+        public void GetOrDefault_Constructor() {
+            var d = new Dictionary<int, List<int>>();
+
+            Assert.IsFalse(d.ContainsKey(2));
+            var c = d.GetOrDefault(2);
+            Assert.IsNotNull(c);
+            Assert.AreEqual(c, d[2]);
+            Assert.IsInstanceOfType(c, typeof(List<int>));
+        }
+
+        [TestMethod]
         public void GetOrDefault_TValue() {
             var d = new Dictionary<int, string>();
 

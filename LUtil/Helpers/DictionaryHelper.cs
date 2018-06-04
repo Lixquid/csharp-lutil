@@ -28,6 +28,27 @@ namespace LUtil.Helpers {
 
         /// <summary>
         ///     Returns the value at the specified key if it exists, otherwise
+        ///     sets the key to a new instance of the key's type.
+        /// </summary>
+        /// <param name="dictionary">
+        ///     The dictionary to return the value of and set the value to.
+        /// </param>
+        /// <param name="key">
+        ///     The key to return from the <paramref name="dictionary"/>,
+        ///     and set the default value to.
+        /// </param>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <returns>The value at the key of the dictionary if it exists, a new instance of the key's type otherwise.</returns>
+        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
+            if (dictionary.ContainsKey(key))
+                return dictionary[key];
+            dictionary[key] = new TValue();
+            return dictionary[key];
+        }
+
+        /// <summary>
+        ///     Returns the value at the specified key if it exists, otherwise
         ///     sets the key to the default object given and returns it.
         /// </summary>
         /// <param name="dictionary">

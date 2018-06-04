@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 namespace LUtil.Helpers.Extensions {
     public static class DictionaryHelperExtensions {
+        /// <inheritdoc cref="DictionaryHelper.GetOrDefault{TKey,TValue}(IDictionary{TKey,TValue},TKey)"/>
+        public static TValue GetOrDefault<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key
+        ) where TValue : new() =>
+            DictionaryHelper.GetOrDefault(dictionary, key);
+
         /// <inheritdoc cref="DictionaryHelper.GetOrDefault{TKey,TValue}(IDictionary{TKey,TValue},TKey,TValue)"/>
         public static TValue GetOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
