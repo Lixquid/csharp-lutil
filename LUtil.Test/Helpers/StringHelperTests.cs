@@ -7,9 +7,9 @@ namespace LUtil.Test.Helpers {
     public class StringHelperTests {
         [TestMethod]
         public void Contains() {
-            Assert.IsTrue( StringHelper.Contains( "hello", "ll", StringComparison.Ordinal ) );
-            Assert.IsFalse( StringHelper.Contains( "hello", "LL", StringComparison.Ordinal ) );
-            Assert.IsTrue( StringHelper.Contains( "hello", "LL", StringComparison.OrdinalIgnoreCase ) );
+            Assert.IsTrue(StringHelper.Contains("hello", "ll", StringComparison.Ordinal));
+            Assert.IsFalse(StringHelper.Contains("hello", "LL", StringComparison.Ordinal));
+            Assert.IsTrue(StringHelper.Contains("hello", "LL", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

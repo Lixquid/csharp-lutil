@@ -12,22 +12,22 @@ namespace LUtil.Test.Helpers {
 
         [TestMethod]
         public void GetMemberType() {
-            Assert.AreEqual( typeof( string ), typeof( TestingClass ).GetMembers().Single( m => m.Name == "StringField" ).GetMemberType() );
-            Assert.AreEqual( typeof( int ), typeof( TestingClass ).GetMembers().Single( m => m.Name == "IntProperty" ).GetMemberType() );
+            Assert.AreEqual(typeof(string), typeof(TestingClass).GetMembers().Single(m => m.Name == "StringField").GetMemberType());
+            Assert.AreEqual(typeof(int), typeof(TestingClass).GetMembers().Single(m => m.Name == "IntProperty").GetMemberType());
         }
 
         [TestMethod]
         public void SetValue() {
             var instance = new TestingClass();
 
-            typeof( TestingClass ).GetMembers()
-                .Single( m => m.Name == "StringField" )
-                .SetValue( instance, "hello" );
-            Assert.AreEqual( "hello", instance.StringField );
-            typeof( TestingClass ).GetMembers()
-                .Single( m => m.Name == "IntProperty" )
-                .SetValue( instance, 5 );
-            Assert.AreEqual( 5, instance.IntProperty );
+            typeof(TestingClass).GetMembers()
+                .Single(m => m.Name == "StringField")
+                .SetValue(instance, "hello");
+            Assert.AreEqual("hello", instance.StringField);
+            typeof(TestingClass).GetMembers()
+                .Single(m => m.Name == "IntProperty")
+                .SetValue(instance, 5);
+            Assert.AreEqual(5, instance.IntProperty);
         }
 
         [TestMethod]
@@ -39,15 +39,15 @@ namespace LUtil.Test.Helpers {
 
             Assert.AreEqual(
                 "hello",
-                typeof( TestingClass ).GetMembers()
-                    .Single( m => m.Name == "StringField" )
-                    .GetValue( instance )
+                typeof(TestingClass).GetMembers()
+                    .Single(m => m.Name == "StringField")
+                    .GetValue(instance)
             );
             Assert.AreEqual(
                 5,
-                typeof( TestingClass ).GetMembers()
-                    .Single( m => m.Name == "IntProperty" )
-                    .GetValue( instance )
+                typeof(TestingClass).GetMembers()
+                    .Single(m => m.Name == "IntProperty")
+                    .GetValue(instance)
             );
         }
 

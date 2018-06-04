@@ -19,20 +19,20 @@ namespace LUtil.Helpers {
         ///     <see cref="FieldInfo"/>, <see cref="PropertyInfo"/>, or
         ///     <see cref="EventInfo"/>.
         /// </exception>
-        public static Type GetMemberType( MemberInfo member ) {
-            switch ( member.MemberType ) {
+        public static Type GetMemberType(MemberInfo member) {
+            switch (member.MemberType) {
                 case MemberTypes.Field:
-                    return ( (FieldInfo) member ).FieldType;
+                    return ((FieldInfo)member).FieldType;
                 case MemberTypes.Property:
-                    return ( (PropertyInfo) member ).PropertyType;
+                    return ((PropertyInfo)member).PropertyType;
                 case MemberTypes.Event:
-                    return ( (EventInfo) member ).EventHandlerType;
+                    return ((EventInfo)member).EventHandlerType;
             }
 
             throw new ArgumentException(
                 "MemberInfo must be of type FieldInfo, PropertyInfo, or" +
                 " EventInfo.",
-                nameof( member )
+                nameof(member)
             );
         }
 
@@ -54,17 +54,17 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="member"/> is not a
         ///     <see cref="FieldInfo"/> or <see cref="PropertyInfo"/>.
         /// </exception>
-        public static object GetValue( MemberInfo member, object instance ) {
-            switch ( member.MemberType ) {
+        public static object GetValue(MemberInfo member, object instance) {
+            switch (member.MemberType) {
                 case MemberTypes.Field:
-                    return ( (FieldInfo) member ).GetValue( instance );
+                    return ((FieldInfo)member).GetValue(instance);
                 case MemberTypes.Property:
-                    return ( (PropertyInfo) member ).GetValue( instance );
+                    return ((PropertyInfo)member).GetValue(instance);
             }
 
             throw new ArgumentException(
                 "MemberInfo must be of type FieldInfo or PropertyInfo.",
-                nameof( member )
+                nameof(member)
             );
         }
 
@@ -86,19 +86,19 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="member"/> is not a
         ///     <see cref="FieldInfo"/> or <see cref="PropertyInfo"/>.
         /// </exception>
-        public static void SetValue( MemberInfo member, object instance, object value ) {
-            switch ( member.MemberType ) {
+        public static void SetValue(MemberInfo member, object instance, object value) {
+            switch (member.MemberType) {
                 case MemberTypes.Field:
-                    ( (FieldInfo) member ).SetValue( instance, value );
+                    ((FieldInfo)member).SetValue(instance, value);
                     return;
                 case MemberTypes.Property:
-                    ( (PropertyInfo) member ).SetValue( instance, value );
+                    ((PropertyInfo)member).SetValue(instance, value);
                     return;
             }
 
             throw new ArgumentException(
                 "MemberInfo must be of type FieldInfo or PropertyInfo.",
-                nameof( member )
+                nameof(member)
             );
         }
     }

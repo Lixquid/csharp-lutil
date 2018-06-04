@@ -15,8 +15,7 @@ namespace LUtil.Helpers {
         ///     within this string, or if <paramref name="value" /> is the empty
         ///     string (""); otherwise, <c>false</c>.
         /// </returns>
-        public static bool Contains( string input, string value, StringComparison comparison ) {
-            return input.IndexOf( value, comparison ) >= 0;
-        }
+        public static bool Contains(string input, string value, StringComparison comparison) =>
+            input.IndexOf(value, comparison) >= 0;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
 
 namespace LUtil.Helpers {
     public static class DictionaryHelper {
@@ -22,9 +21,9 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="dictionary" /> contains multiple values that would
         ///     resolve to the same key.
         /// </exception>
-        public static IDictionary<TValue, TKey> Reverse<TKey, TValue>( IDictionary<TKey, TValue> dictionary ) {
-            return dictionary.Select( kp => ( kp.Value, kp.Key ) )
-                .ToDictionary( kp => kp.Item1, kp => kp.Item2 );
+        public static IDictionary<TValue, TKey> Reverse<TKey, TValue>(IDictionary<TKey, TValue> dictionary) {
+            return dictionary.Select(kp => (kp.Value, kp.Key))
+                .ToDictionary(kp => kp.Item1, kp => kp.Item2);
         }
 
         /// <summary>
@@ -45,9 +44,9 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The value at the key of the dictionary if it exists, the default value otherwise.</returns>
-        public static TValue GetOrDefault<TKey, TValue>( IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value ) {
-            if ( dictionary.ContainsKey( key ) )
-                return dictionary[ key];
+        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
+            if (dictionary.ContainsKey(key))
+                return dictionary[key];
             dictionary[key] = default_value;
             return default_value;
         }
@@ -75,9 +74,9 @@ namespace LUtil.Helpers {
             TKey key,
             Func<TKey, TValue> default_delegate
         ) {
-            if ( dictionary.ContainsKey( key ) )
+            if (dictionary.ContainsKey(key))
                 return dictionary[key];
-            dictionary[key] = default_delegate( key );
+            dictionary[key] = default_delegate(key);
             return dictionary[key];
         }
 
@@ -94,7 +93,7 @@ namespace LUtil.Helpers {
             IDictionary<TKey, TValue> dictionary,
             TKey key
         ) where TValue : class {
-            return dictionary.ContainsKey( key ) ? dictionary[key] : null;
+            return dictionary.ContainsKey(key) ? dictionary[key] : null;
         }
 
         /// <summary>
@@ -110,7 +109,7 @@ namespace LUtil.Helpers {
             IDictionary<TKey, TValue> dictionary,
             TKey key
         ) where TValue : struct {
-            return dictionary.ContainsKey( key ) ? (TValue?)dictionary[key] : null;
+            return dictionary.ContainsKey(key) ? (TValue?)dictionary[key] : null;
         }
     }
 }

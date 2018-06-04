@@ -13,32 +13,32 @@ namespace LUtil.Test.Helpers {
                 { "two", 2 },
                 { "three", 3 }
             };
-            var dr = DictionaryHelper.Reverse( d );
-            Assert.AreEqual( 3, dr.Count );
-            Assert.AreEqual( "one", dr[1] );
-            Assert.AreEqual( "two", dr[2] );
-            Assert.AreEqual( "three", dr[3] );
+            var dr = DictionaryHelper.Reverse(d);
+            Assert.AreEqual(3, dr.Count);
+            Assert.AreEqual("one", dr[1]);
+            Assert.AreEqual("two", dr[2]);
+            Assert.AreEqual("three", dr[3]);
         }
 
         [TestMethod]
         public void GetOrDefault_TValue() {
             var d = new Dictionary<int, string>();
 
-            Assert.IsFalse( d.ContainsKey(2));
-            Assert.AreEqual( "two", d.GetOrDefault( 2, "two" ) );
-            Assert.IsTrue( d.ContainsKey(2));
-            Assert.AreEqual( "two", d[2] );
+            Assert.IsFalse(d.ContainsKey(2));
+            Assert.AreEqual("two", d.GetOrDefault(2, "two"));
+            Assert.IsTrue(d.ContainsKey(2));
+            Assert.AreEqual("two", d[2]);
         }
 
         [TestMethod]
         public void GetOrDefault_Func() {
             var d = new Dictionary<int, ICollection<int>>();
 
-            Assert.IsFalse( d.ContainsKey(2));
-            var c = d.GetOrDefault( 2, i => new int[ i ] );
-            Assert.IsTrue( d.ContainsKey(2));
-            Assert.AreSame( c, d[2] );
-            Assert.AreEqual( 2, d[2].Count );
+            Assert.IsFalse(d.ContainsKey(2));
+            var c = d.GetOrDefault(2, i => new int[i]);
+            Assert.IsTrue(d.ContainsKey(2));
+            Assert.AreSame(c, d[2]);
+            Assert.AreEqual(2, d[2].Count);
         }
 
         [TestMethod]
@@ -48,19 +48,19 @@ namespace LUtil.Test.Helpers {
                 { 2, "two" }
             };
 
-            Assert.AreEqual( "one", d.GetOrNull(1) );
-            Assert.IsNull( d.GetOrNull(3) );
+            Assert.AreEqual("one", d.GetOrNull(1));
+            Assert.IsNull(d.GetOrNull(3));
         }
 
         [TestMethod]
         public void GetOrNullable() {
-            var d = new Dictionary<string,int> {
+            var d = new Dictionary<string, int> {
                 { "one", 1 },
                 { "two", 2 }
             };
 
-            Assert.AreEqual( 1, d.GetOrNullable( "one" ));
-            Assert.IsNull( d.GetOrNullable( "three" ));
+            Assert.AreEqual(1, d.GetOrNullable("one"));
+            Assert.IsNull(d.GetOrNullable("three"));
         }
     }
 }
