@@ -15,6 +15,10 @@ namespace LUtil.Helpers {
         public static TimeSpan Multiply(TimeSpan input, double value) =>
             TimeSpan.FromTicks((long)(input.Ticks * value));
 
+        /// <inheritdoc cref="Multiply(System.TimeSpan,double)"/>
+        public static TimeSpan Multiply(TimeSpan input, long value) =>
+            TimeSpan.FromTicks(input.Ticks * value);
+
         /// <summary>
         ///     Returns a new <see cref="TimeSpan" /> that divides the given
         ///     duration by the amount given.
@@ -27,6 +31,10 @@ namespace LUtil.Helpers {
         /// </returns>
         public static TimeSpan Divide(TimeSpan input, double value) =>
             TimeSpan.FromTicks((long)(input.Ticks / value));
+
+        /// <inheritdoc cref="Divide(System.TimeSpan,double)"/>
+        public static TimeSpan Divide(TimeSpan input, long value) =>
+            TimeSpan.FromTicks(input.Ticks / value);
 
         /// <summary>
         ///     Negates a <see cref="TimeSpan"/> if it has a negative value.
