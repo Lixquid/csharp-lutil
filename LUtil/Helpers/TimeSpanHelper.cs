@@ -27,5 +27,18 @@ namespace LUtil.Helpers {
         /// </returns>
         public static TimeSpan Divide(TimeSpan input, double value) =>
             TimeSpan.FromTicks((long)(input.Ticks / value));
+
+        /// <summary>
+        ///     Negates a <see cref="TimeSpan"/> if it has a negative value.
+        /// </summary>
+        /// <param name="input">
+        ///     The duration to gain the absolute value for.
+        /// </param>
+        /// <returns>
+        ///     The given <see cref="TimeSpan"/> if it has a positive value,
+        ///     a new one with a negated value if it has a negative value.
+        /// </returns>
+        public static TimeSpan Abs(TimeSpan input) =>
+            input.Ticks < 0 ? input.Negate() : input;
     }
 }

@@ -9,5 +9,9 @@ namespace LUtil.Helpers.Extensions {
         /// <inheritdoc cref="TimeSpanHelper.Divide" />
         public static TimeSpan Divide(this TimeSpan input, double value) =>
             TimeSpanHelper.Divide(input, value);
+
+        /// <inheritdoc cref="TimeSpanHelper.Abs"/>
+        public static TimeSpan Abs(this TimeSpan input) =>
+            TimeSpanHelper.Abs(input);
     }
 }
