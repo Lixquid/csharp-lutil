@@ -22,8 +22,7 @@ namespace LUtil.Helpers {
         ///     resolve to the same key.
         /// </exception>
         public static IDictionary<TValue, TKey> Reverse<TKey, TValue>(IDictionary<TKey, TValue> dictionary) {
-            return dictionary.Select(kp => (kp.Value, kp.Key))
-                .ToDictionary(kp => kp.Item1, kp => kp.Item2);
+            return ToDictionary(dictionary.Select(kp => (kp.Value, kp.Key)));
         }
 
         /// <summary>
@@ -132,5 +131,41 @@ namespace LUtil.Helpers {
         ) where TValue : struct {
             return dictionary.ContainsKey(key) ? (TValue?)dictionary[key] : null;
         }
+
+        /// <summary>
+        ///     Converts an enumerable of
+        ///     <see cref="KeyValuePair{TKey,TValue}"/>s back into a
+        ///     <see cref="Dictionary{TKey,TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            IEnumerable<KeyValuePair<TKey, TValue>> enumerable
+        ) =>
+            enumerable.ToDictionary(kp => kp.Key, kp => kp.Value);
+
+        /// <summary>
+        ///     Converts an enumerable of
+        ///     <see cref="Tuple{T1,T2}"/>s back into a
+        ///     <see cref="Dictionary{TKey,TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            IEnumerable<Tuple<TKey, TValue>> enumerable
+        ) =>
+            enumerable.ToDictionary(t => t.Item1, t => t.Item2);
+
+        /// <summary>
+        ///     Converts an enumerable of
+        ///     <see cref="ValueTuple{T1,T2}"/>s back into a
+        ///     <see cref="Dictionary{TKey,TValue}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            IEnumerable<ValueTuple<TKey, TValue>> enumerable
+        ) =>
+            enumerable.ToDictionary(t => t.Item1, t => t.Item2);
     }
 }

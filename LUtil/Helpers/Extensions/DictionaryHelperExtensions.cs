@@ -39,5 +39,23 @@ namespace LUtil.Helpers.Extensions {
             TKey key
         ) where TValue : struct =>
             DictionaryHelper.GetOrNullable(dictionary, key);
+
+        /// <inheritdoc cref="DictionaryHelper.ToDictionary{TKey,TValue}(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{TKey,TValue}})"/>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> enumerable
+        ) =>
+            DictionaryHelper.ToDictionary(enumerable);
+
+        /// <inheritdoc cref="DictionaryHelper.ToDictionary{TKey,TValue}(System.Collections.Generic.IEnumerable{System.Tuple{TKey,TValue}})"/>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<Tuple<TKey, TValue>> enumerable
+        ) =>
+            DictionaryHelper.ToDictionary(enumerable);
+
+        /// <inheritdoc cref="DictionaryHelper.ToDictionary{TKey,TValue}(System.Collections.Generic.IEnumerable{System.ValueTuple{TKey,TValue}})"/>
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<ValueTuple<TKey, TValue>> enumerable
+        ) =>
+            DictionaryHelper.ToDictionary(enumerable);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LUtil.Helpers;
 using LUtil.Helpers.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -72,6 +73,35 @@ namespace LUtil.Test.Helpers {
 
             Assert.AreEqual(1, d.GetOrNullable("one"));
             Assert.IsNull(d.GetOrNullable("three"));
+        }
+
+        [TestMethod]
+        public void ToDictionary() {
+            var d1 = new[] {
+                new KeyValuePair<int, string>( 1, "one" ),
+                new KeyValuePair<int, string>( 2, "two" ),
+                new KeyValuePair<int, string>( 3, "three" )
+            }.ToDictionary();
+            var d2 = new[] {
+                Tuple.Create(1, "one"),
+                Tuple.Create(2, "two"),
+                Tuple.Create(3, "three")
+            }.ToDictionary();
+            var d3 = new[] {
+                (1, "one"),
+                (2, "two"),
+                (3, "three")
+            }.ToDictionary();
+
+            Assert.AreEqual( "one", d1[1] );
+            Assert.AreEqual( "one", d2[1] );
+            Assert.AreEqual( "one", d3[1] );
+            Assert.AreEqual( "two", d1[2] );
+            Assert.AreEqual( "two", d2[2] );
+            Assert.AreEqual( "two", d3[2] );
+            Assert.AreEqual( "three", d1[3] );
+            Assert.AreEqual( "three", d2[3] );
+            Assert.AreEqual( "three", d3[3] );
         }
     }
 }
