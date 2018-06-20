@@ -105,10 +105,10 @@ namespace LUtil.Helpers {
         ///     exists, otherwise returns <c>null</c>.
         /// </summary>
         /// <param name="dictionary">The dictionary to return the key at.</param>
-        /// <param name="key">The key to retreive the value from in the dictionary.</param>
+        /// <param name="key">The key to retrieve the value from in the dictionary.</param>
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
-        /// <returns>The specified value at he key in the dictionary, <c>null</c> otherwise.</returns>
+        /// <returns>The specified value at the key in the dictionary, <c>null</c> otherwise.</returns>
         public static TValue GetOrNull<TKey, TValue>(
             IDictionary<TKey, TValue> dictionary,
             TKey key
@@ -121,10 +121,10 @@ namespace LUtil.Helpers {
         ///     exists, otherwise returns <c>null</c>.
         /// </summary>
         /// <param name="dictionary">The dictionary to return the key at.</param>
-        /// <param name="key">The key to retreive the value from in the dictionary.</param>
+        /// <param name="key">The key to retrieve the value from in the dictionary.</param>
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
-        /// <returns>The specified value at he key in the dictionary, <c>null</c> otherwise.</returns>
+        /// <returns>The specified value at the key in the dictionary, <c>null</c> otherwise.</returns>
         public static TValue? GetOrNullable<TKey, TValue>(
             IDictionary<TKey, TValue> dictionary,
             TKey key
