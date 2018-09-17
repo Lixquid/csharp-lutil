@@ -50,7 +50,7 @@ namespace LUtil.Test.Collections {
                 { "2", "two" }
             };
             var eventTriggered = false;
-            d.DictionaryCleared += (sender, args) => eventTriggered = true;
+            d.ItemsCleared += (sender, args) => eventTriggered = true;
             d.Clear();
             Assert.IsTrue(eventTriggered);
             Assert.AreEqual(0, d.Count);
