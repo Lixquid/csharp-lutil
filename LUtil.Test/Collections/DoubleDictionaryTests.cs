@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LUtil.Test.Collections {
     [TestClass]
-    public class DoubleDictTests {
+    public class DoubleDictionaryTests {
         [TestMethod]
         public void InterfaceMethods() {
-            var d = new DoubleDict<int, string> {
+            var d = new DoubleDictionary<int, string> {
                 { 1, "one" },
                 { "two", 2 },
                 { 3, "three" }
@@ -26,7 +26,7 @@ namespace LUtil.Test.Collections {
 
         [TestMethod]
         public void ForwardBackward() {
-            var d = new DoubleDict<int, int>();
+            var d = new DoubleDictionary<int, int>();
             d.Forward.Add(1, 2);
             d.Forward.Add(2, 3);
             d.Forward.Add(3, 4);
@@ -37,7 +37,7 @@ namespace LUtil.Test.Collections {
 
         [TestMethod]
         public void Constructors_Comparers() {
-            var d = new DoubleDict<string, int>(StringComparer.OrdinalIgnoreCase, EqualityComparer<int>.Default) {
+            var d = new DoubleDictionary<string, int>(StringComparer.OrdinalIgnoreCase, EqualityComparer<int>.Default) {
                 { "one", 1 },
                 { 2, "two" },
                 { "three", 3 }
@@ -50,7 +50,7 @@ namespace LUtil.Test.Collections {
 
         [TestMethod]
         public void Constructors_ExistingDictionary() {
-            var d = new DoubleDict<int, int>(new Dictionary<int, int> {
+            var d = new DoubleDictionary<int, int>(new Dictionary<int, int> {
                 { 1, 2 },
                 { 2, 3 },
                 { 3, 4 }

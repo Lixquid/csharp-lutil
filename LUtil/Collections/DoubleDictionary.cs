@@ -4,7 +4,7 @@ using System.Linq;
 using LUtil.Helpers;
 
 namespace LUtil.Collections {
-    public class DoubleDict<TForward, TBackward> : IDictionary<TForward, TBackward> {
+    public class DoubleDictionary<TForward, TBackward> : IDictionary<TForward, TBackward> {
         private readonly EventDictionary<TBackward, TForward> _backwardInternal;
         private readonly EventDictionary<TForward, TBackward> _forwardInternal;
         public IDictionary<TForward, TBackward> Forward => _forwardInternal;
@@ -26,7 +26,7 @@ namespace LUtil.Collections {
         #region Constructors
 
         /// <inheritdoc cref="EventDictionary{TKey,TValue}()" />
-        public DoubleDict() {
+        public DoubleDictionary() {
             _forwardInternal = new EventDictionary<TForward, TBackward>();
             _backwardInternal = new EventDictionary<TBackward, TForward>();
             AddEvents();
@@ -34,7 +34,7 @@ namespace LUtil.Collections {
 
         /// <inheritdoc cref="EventDictionary{TKey,TValue}( IDictionary{TKey,TValue} )" />
         /// <remarks>
-        ///     <c>DoubleDict</c> only accepts an existing dictionary that
+        ///     <c>DoubleDictionary</c> only accepts an existing dictionary that
         ///     maps forwards (<typeparamref name="TForward" /> to
         ///     <typeparamref name="TBackward" />), to avoid ambiguity in the
         ///     cases where <typeparamref name="TForward" /> is the same type
@@ -42,7 +42,7 @@ namespace LUtil.Collections {
         ///     backwards mapping Dictionary, reverse it with
         ///     <see cref="DictionaryHelper.Reverse{TKey,TValue}" /> first.
         /// </remarks>
-        public DoubleDict(IDictionary<TForward, TBackward> dictionary) {
+        public DoubleDictionary(IDictionary<TForward, TBackward> dictionary) {
             _forwardInternal = new EventDictionary<TForward, TBackward>(dictionary);
             _backwardInternal = new EventDictionary<TBackward, TForward>(DictionaryHelper.Reverse(dictionary));
             AddEvents();
@@ -55,7 +55,7 @@ namespace LUtil.Collections {
         /// <param name="backwardComparer">
         ///     The comparer to use for the backwards-pointing keys.
         /// </param>
-        public DoubleDict(IDictionary<TForward, TBackward> dictionary, IEqualityComparer<TForward> forwardComparer,
+        public DoubleDictionary(IDictionary<TForward, TBackward> dictionary, IEqualityComparer<TForward> forwardComparer,
             IEqualityComparer<TBackward> backwardComparer) {
             _forwardInternal = new EventDictionary<TForward, TBackward>(dictionary, forwardComparer);
             _backwardInternal =
@@ -70,7 +70,7 @@ namespace LUtil.Collections {
         /// <param name="backwardComparer">
         ///     The comparer to use for the backwards-pointing keys.
         /// </param>
-        public DoubleDict(IEqualityComparer<TForward> forwardComparer,
+        public DoubleDictionary(IEqualityComparer<TForward> forwardComparer,
             IEqualityComparer<TBackward> backwardComparer) {
             _forwardInternal = new EventDictionary<TForward, TBackward>(forwardComparer);
             _backwardInternal = new EventDictionary<TBackward, TForward>(backwardComparer);
@@ -78,7 +78,7 @@ namespace LUtil.Collections {
         }
 
         /// <inheritdoc cref="EventDictionary{TKey,TValue}( int )" />
-        public DoubleDict(int capacity) {
+        public DoubleDictionary(int capacity) {
             _forwardInternal = new EventDictionary<TForward, TBackward>(capacity);
             _backwardInternal = new EventDictionary<TBackward, TForward>(capacity);
             AddEvents();
@@ -91,7 +91,7 @@ namespace LUtil.Collections {
         /// <param name="backwardComparer">
         ///     The comparer to use for the backwards-pointing keys.
         /// </param>
-        public DoubleDict(int capacity, IEqualityComparer<TForward> forwardComparer,
+        public DoubleDictionary(int capacity, IEqualityComparer<TForward> forwardComparer,
             IEqualityComparer<TBackward> backwardComparer) {
             _forwardInternal = new EventDictionary<TForward, TBackward>(capacity, forwardComparer);
             _backwardInternal = new EventDictionary<TBackward, TForward>(capacity, backwardComparer);
