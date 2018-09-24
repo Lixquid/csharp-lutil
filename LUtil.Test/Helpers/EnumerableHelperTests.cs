@@ -25,5 +25,16 @@ namespace LUtil.Test.Helpers {
             }
             Assert.AreEqual(11, i);
         }
+
+        [TestMethod]
+        public void Repeat_Number() {
+            var i = 0;
+            var enumerable = new[] { 1, 2, 3 };
+            foreach (var v in enumerable.Repeat(3)) {
+                Assert.AreEqual(enumerable[i % 3], v);
+                i++;
+            }
+            Assert.AreEqual(enumerable.Length * 3, i);
+        }
     }
 }

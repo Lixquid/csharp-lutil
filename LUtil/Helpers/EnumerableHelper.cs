@@ -99,5 +99,38 @@ namespace LUtil.Helpers {
             }
         }
 
+        /// <summary>
+        ///     Returns a new enumerable which repeats an existing enumerable
+        ///     the specified number of times.
+        /// </summary>
+        /// <typeparam name="T">The type of value returned in the Enumerable.</typeparam>
+        /// <param name="enumerable">The enumerable to get values from.</param>
+        /// <param name="count">The number of times to repeat the Enumerable.</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown if <paramref name="count"/> is a negative number.
+        /// </exception>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown if the source <paramref name="enumerable"/> contains no
+        ///     elements.
+        /// </exception>
+        public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, int count) {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count));
+
+            var list = enumerable as IList<T> ?? enumerable.ToList();
+            if (list.Count == 0)
+                throw new InvalidOperationException("Sequence contains no elements");
+            return GetIterator();
+
+            IEnumerable<T> GetIterator() {
+                var iterations = 0;
+                while (iterations++ < count) {
+                    foreach (var v in list) {
+                        yield return v;
+                    }
+                }
+            }
+        }
+
     }
 }

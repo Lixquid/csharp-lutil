@@ -18,5 +18,9 @@ namespace LUtil.Helpers.Extensions {
         /// <inheritdoc cref="EnumerableHelper.Repeat{T}(IEnumerable{T},Func{T,bool})"/>
         public static IEnumerable<T> Repeat<T>(this IEnumerable<T> enumerable, Func<T, bool> condition) =>
             EnumerableHelper.Repeat(enumerable, condition);
+
+        /// <inheritdoc cref="EnumerableHelper.Repeat{T}(IEnumerable{T},int)"/>
+        public static IEnumerable<T> Repeat<T>(this IEnumerable<T> enumerable, int count) =>
+            EnumerableHelper.Repeat(enumerable, count);
     }
 }
