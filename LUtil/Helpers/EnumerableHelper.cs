@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
     public static class EnumerableHelper {
@@ -33,6 +34,8 @@ namespace LUtil.Helpers {
         ///     <see cref="Random{T}(IEnumerable{T},System.Random)"/>.
         /// </remarks>
         public static T Random<T>(IEnumerable<T> enumerable) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+
             lock (_randomDefaultLock) {
                 return Random(enumerable, _randomDefault);
             }
@@ -49,6 +52,8 @@ namespace LUtil.Helpers {
         ///     elements.
         /// </exception>
         public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+
             // Create a new list to avoid problems with the enumerable mutating
             // as we iterate over it
             var list = enumerable as IList<T> ?? enumerable.ToList();
@@ -83,6 +88,9 @@ namespace LUtil.Helpers {
         ///     elements.
         /// </exception>
         public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, Func<T, bool> condition) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+            condition.ThrowIfNull(nameof(condition));
+
             var list = enumerable as IList<T> ?? enumerable.ToList();
             if (list.Count == 0)
                 throw new InvalidOperationException("Sequence contains no elements");
@@ -114,6 +122,7 @@ namespace LUtil.Helpers {
         ///     elements.
         /// </exception>
         public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, int count) {
+            enumerable.ThrowIfNull(nameof(enumerable));
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));
 

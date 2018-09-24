@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
     public static class EnumerableStaticHelper {
@@ -25,8 +26,13 @@ namespace LUtil.Helpers {
         ///     <c>false</c> is returned, the enumerable will end.
         /// </param>
         public static IEnumerable<T> Repeat<T>(T value, Func<bool> condition) {
-            while (condition()) {
-                yield return value;
+            condition.ThrowIfNull(nameof(condition));
+            return GetIterator();
+
+            IEnumerable<T> GetIterator() {
+                while (condition()) {
+                    yield return value;
+                }
             }
         }
     }

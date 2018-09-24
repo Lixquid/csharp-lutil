@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
     public static class RandomHelper {
@@ -16,6 +17,8 @@ namespace LUtil.Helpers {
         ///     likely to appear in the output string.
         /// </param>
         public static string NextString(System.Random random, int length, IList<char> source) {
+            source.ThrowIfNull(nameof(source));
+
             var output = new char[length];
             for (var i = 0; i < length; i++) {
                 output[i] = source[random.Next(source.Count)];
@@ -39,6 +42,8 @@ namespace LUtil.Helpers {
         /// <param name="random">The source of randomness.</param>
         /// <param name="enumerable">The enumerable to get a random value from.</param>
         public static T NextFromEnumerable<T>(System.Random random, IEnumerable<T> enumerable) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+
             var list = enumerable as IList<T> ?? enumerable.ToList();
             return list[random.Next(list.Count)];
         }
