@@ -13,5 +13,9 @@ namespace LUtil.Helpers.Extensions {
             string source = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ) =>
             RandomHelper.NextString(random, length, source);
+
+        /// <inheritdoc cref="RandomHelper.NextFromEnumerable{T}(System.Random,IEnumerable{T})"/>
+        public static T NextFromEnumerable<T>(this System.Random random, IEnumerable<T> enumerable) =>
+            RandomHelper.NextFromEnumerable(random, enumerable);
     }
 }

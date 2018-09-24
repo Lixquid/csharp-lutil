@@ -29,5 +29,15 @@ namespace LUtil.Test.Helpers {
                 }
             }
         }
+
+        [TestMethod]
+        public void NextFromEnumerable() {
+            var enumerable = Enumerable.Range(0, 100).ToList();
+            var random = new System.Random();
+
+            foreach (var _ in Enumerable.Range(0, 100)) {
+                CollectionAssert.Contains(enumerable, random.NextFromEnumerable(enumerable));
+            }
+        }
     }
 }

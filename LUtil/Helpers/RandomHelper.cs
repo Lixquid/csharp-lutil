@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace LUtil.Helpers {
     public static class RandomHelper {
@@ -30,5 +31,16 @@ namespace LUtil.Helpers {
             string source = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ) =>
             NextString(random, length, source.ToCharArray());
+
+        /// <summary>
+        ///     Returns a random member of a specified enumerable.
+        /// </summary>
+        /// <typeparam name="T">The type enumerated in the enumerable.</typeparam>
+        /// <param name="random">The source of randomness.</param>
+        /// <param name="enumerable">The enumerable to get a random value from.</param>
+        public static T NextFromEnumerable<T>(System.Random random, IEnumerable<T> enumerable) {
+            var list = enumerable as IList<T> ?? enumerable.ToList();
+            return list[random.Next(list.Count)];
+        }
     }
 }
