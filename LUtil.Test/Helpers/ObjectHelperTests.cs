@@ -15,5 +15,11 @@ namespace LUtil.Test.Helpers {
             input = null;
             input.ThrowIfNull(nameof(input));
         }
+
+        [TestMethod]
+        public void EqualTo() {
+            Assert.IsTrue(5.EqualTo(1, 2, 5));
+            Assert.IsFalse(5.EqualTo(1, 2, 3));
+        }
     }
 }

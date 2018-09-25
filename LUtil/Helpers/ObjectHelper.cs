@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace LUtil.Helpers {
     public static class ObjectHelper {
@@ -30,6 +31,28 @@ namespace LUtil.Helpers {
             if (name == null)
                 throw new ArgumentNullException();
             throw new ArgumentNullException(name);
+        }
+
+        /// <summary>
+        ///     Returns a boolean indicating if hte given value is equal to any
+        ///     of the specified values.
+        /// </summary>
+        /// <typeparam name="T">The type of the checked value.</typeparam>
+        /// <param name="source">The value to be tested.</param>
+        /// <param name="any">
+        ///     The list of values <paramref name="source"/> can be equal to.
+        /// </param>
+        /// <example>
+        ///     <code><![CDATA[
+        ///     if (input.EqualTo(1, 2, 4)) {
+        ///         // ...
+        ///     }
+        ///     ]]></code>
+        ///     This code will enter the <c>if</c> block if <c>input</c> is
+        ///     1, 2, or 4.
+        /// </example>
+        public static bool EqualTo<T>(T source, params T[] any) {
+            return any.Contains(source);
         }
     }
 }
