@@ -47,5 +47,92 @@ namespace LUtil.Helpers {
             var list = enumerable as IList<T> ?? enumerable.ToList();
             return list[random.Next(list.Count)];
         }
+
+        /// <summary>
+        ///     Returns an infinite enumerable that returns <c>double</c>s
+        ///     between 0 inclusive and 1 exclusive from a
+        ///     <see cref="System.Random"/>.
+        /// </summary>
+        /// <param name="random">The source of random values.</param>
+        public static IEnumerable<double> GetDoubleEnumerable(System.Random random) {
+            random.ThrowIfNull(nameof(random));
+            return GetIterator();
+
+            IEnumerable<double> GetIterator() {
+                while (true) {
+                    yield return random.NextDouble();
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Returns an infinite enumerable that returns non-negative
+        ///     <c>int</c>s from a <see cref="System.Random"/>.
+        /// </summary>
+        /// <param name="random">The source of random values.</param>
+        public static IEnumerable<int> GetIntEnumerable(System.Random random) {
+            random.ThrowIfNull(nameof(random));
+            return GetIterator();
+
+            IEnumerable<int> GetIterator() {
+                while (true) {
+                    yield return random.Next();
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Returns an infinite enumerable that returns non-negative
+        ///     <c>int</c>s that are below a maximum value from a
+        ///     <see cref="System.Random"/>.
+        /// </summary>
+        /// <param name="random">The source of random values.</param>
+        /// <param name="maxValue">
+        ///     The exclusive upper bound of generated values.
+        /// </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///     Thrown if <paramref name="maxValue">maxValue</paramref> is less
+        ///     than 0.
+        /// </exception>
+        public static IEnumerable<int> GetIntEnumerable(System.Random random, int maxValue) {
+            random.ThrowIfNull(nameof(random));
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            random.Next(maxValue);
+            return GetIterator();
+
+            IEnumerable<int> GetIterator() {
+                while (true) {
+                    yield return random.Next(maxValue);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Returns an infinite enumerable that returns <c>int</c>s that are
+        ///     between a specified range from a <see cref="System.Random"/>.
+        /// </summary>
+        /// <param name="random">The source of random values.</param>
+        /// <param name="minValue">
+        ///     The inclusive lower bound of generated values.
+        /// </param>
+        /// <param name="maxValue">
+        ///     The exclusive upper bound of generated values.
+        /// </param>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        ///     <paramref name="minValue">minValue</paramref> is greater than
+        ///     <paramref name="maxValue">maxValue</paramref>.
+        /// </exception>
+        public static IEnumerable<int> GetIntEnumerable(System.Random random, int minValue, int maxValue) {
+            random.ThrowIfNull(nameof(random));
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+            random.Next(minValue, maxValue);
+            return GetIterator();
+
+            IEnumerable<int> GetIterator() {
+                while (true) {
+                    yield return random.Next(minValue, maxValue);
+                }
+            }
+        }
     }
 }

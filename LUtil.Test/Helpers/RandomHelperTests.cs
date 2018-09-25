@@ -39,5 +39,46 @@ namespace LUtil.Test.Helpers {
                 CollectionAssert.Contains(enumerable, random.NextFromEnumerable(enumerable));
             }
         }
+
+        [TestMethod]
+        public void GetDoubleEnumerable() {
+            var i = 0;
+            var enumerable = new System.Random().GetDoubleEnumerable();
+            foreach (var v in enumerable) {
+                Assert.IsTrue(v >= 0);
+                Assert.IsTrue(v < 1);
+                if (i++ == 100)
+                    break;
+            }
+        }
+
+        [TestMethod]
+        public void GetIntEnumerable() {
+            var i = 0;
+            var enumerable = new System.Random().GetIntEnumerable();
+            foreach (var v in enumerable) {
+                Assert.IsTrue(v >= 0);
+                if (i++ == 1000)
+                    break;
+            }
+
+            i = 0;
+            enumerable = new System.Random().GetIntEnumerable(10);
+            foreach (var v in enumerable) {
+                Assert.IsTrue(v >= 0);
+                Assert.IsTrue(v < 10);
+                if (i++ == 1000)
+                    break;
+            }
+
+            i = 0;
+            enumerable = new System.Random().GetIntEnumerable(-10, 10);
+            foreach (var v in enumerable) {
+                Assert.IsTrue(v >= -10);
+                Assert.IsTrue(v < 10);
+                if (i++ == 1000)
+                    break;
+            }
+        }
     }
 }
