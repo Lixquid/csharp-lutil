@@ -25,13 +25,11 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="value"/> is <c>null</c>.
         /// </exception>
         public static void ThrowIfNull(object value, string name = null) {
-            if (value == null) {
-                if (name == null) {
-                    throw new ArgumentNullException();
-                }
+            if (value != null) return;
 
-                throw new ArgumentNullException(name);
-            }
+            if (name == null)
+                throw new ArgumentNullException();
+            throw new ArgumentNullException(name);
         }
     }
 }
