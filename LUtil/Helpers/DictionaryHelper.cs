@@ -25,9 +25,103 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
+        /// <example>
+        ///     <code><![CDATA[
+        ///         var dict = new Dictionary<int, string>{
+        ///             [1] = "one", [2] = "two"
+        ///         };
+        ///         dict.Reverse();
+        ///         // = Dictionary<string, int>(2) { { "one", 1 }, { "two", 2 } }
+        ///     ]]></code>
+        /// </example>
         public static IDictionary<TValue, TKey> Reverse<TKey, TValue>(IDictionary<TKey, TValue> dictionary) {
             dictionary.ThrowIfNull(nameof(dictionary));
             return ToDictionary(dictionary.Select(kp => (kp.Value, kp.Key)));
+        }
+
+        /// <summary>
+        ///     Returns the value at the specified key if it exists, otherwise
+        ///     returns a new object of the key's type.
+        /// </summary>
+        /// <param name="dictionary">
+        ///     The dictionary to return the value of.
+        /// </param>
+        /// <param name="key">
+        ///     The key to attempt to return from the
+        ///     <paramref name="dictionary"/>.
+        /// </param>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <returns>The value at the key of the dictionary if it exists, a new instance of the key's type otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
+        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key)
+            where TValue : new() {
+            dictionary.ThrowIfNull(nameof(dictionary));
+            return dictionary.ContainsKey(key) ? dictionary[key] : new TValue();
+        }
+
+        /// <summary>
+        ///     Returns the value at the specified key if it exists, otherwise
+        ///     returns a default value.
+        /// </summary>
+        /// <param name="dictionary">
+        ///     The dictionary to return the value of.
+        /// </param>
+        /// <param name="key">
+        ///     The key to attempt to return from the
+        ///     <paramref name="dictionary"/>.
+        /// </param>
+        /// <param name="default_value">
+        ///     The default value to return if the key does not exist
+        ///     in the <paramref name="dictionary"/>.
+        /// </param>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <returns>The value at the key of the dictionary if it exists, the default value otherwise.</returns>
+        /// <remarks>
+        ///     Note that the <paramref name="default_value"/> will be shared
+        ///     across all calls to this function if
+        ///     <typeparamref name="TValue"/> is a reference type. To generate a
+        ///     unique default value on each invocation, see
+        ///     <see cref="GetOrDefault{TKey,TValue}(IDictionary{TKey,TValue},TKey,Func{TKey,TValue})"/>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
+        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
+            dictionary.ThrowIfNull(nameof(dictionary));
+            return dictionary.ContainsKey(key) ? dictionary[key] : default_value;
+        }
+
+        /// <summary>
+        ///     Returns the value at the specified key if it exists, otherwise
+        ///     returns the output of the specified default delegate.
+        /// </summary>
+        /// <param name="dictionary">
+        ///     The dictionary to return the value of.
+        /// </param>
+        /// <param name="key">
+        ///     The key to attempt to return from the
+        ///     <paramref name="dictionary"/>.
+        /// </param>
+        /// <param name="default_delegate">
+        ///     The delegate to call to generate the default value if the key
+        ///     does not exist in the <paramref name="dictionary"/>.
+        /// </param>
+        /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
+        /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <returns>The value at the key of the dictionary if it exists, the generated default value otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> or
+        ///     <paramref name="default_delegate"/> is <c>null</c>.
+        /// </exception>
+        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key,
+            Func<TKey, TValue> default_delegate) {
+            dictionary.ThrowIfNull(nameof(dictionary));
+            default_delegate.ThrowIfNull(nameof(default_delegate));
+            return dictionary.ContainsKey(key) ? dictionary[key] : default_delegate(key);
         }
 
         /// <summary>
@@ -47,7 +141,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
+        public static TValue GetOrInsert<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
             dictionary.ThrowIfNull(nameof(dictionary));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
@@ -73,10 +167,17 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The value at the key of the dictionary if it exists, the default value otherwise.</returns>
+        /// <remarks>
+        ///     Note that the <paramref name="default_value"/> will be shared
+        ///     across all calls to this function if
+        ///     <typeparamref name="TValue"/> is a reference type. To generate a
+        ///     unique default value on each invocation, see
+        ///     <see cref="GetOrInsert{TKey,TValue}(IDictionary{TKey,TValue},TKey,Func{TKey,TValue})"/>.
+        /// </remarks>
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
+        public static TValue GetOrInsert<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
             dictionary.ThrowIfNull(nameof(dictionary));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
@@ -106,7 +207,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="dictionary"/> or
         ///     <paramref name="default_delegate"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrDefault<TKey, TValue>(
+        public static TValue GetOrInsert<TKey, TValue>(
             IDictionary<TKey, TValue> dictionary,
             TKey key,
             Func<TKey, TValue> default_delegate
