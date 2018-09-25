@@ -1,4 +1,5 @@
 ﻿using System;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
     public static class StringHelper {
@@ -15,7 +16,14 @@ namespace LUtil.Helpers {
         ///     within this string, or if <paramref name="value" /> is the empty
         ///     string (""); otherwise, <c>false</c>.
         /// </returns>
-        public static bool Contains(string input, string value, StringComparison comparison) =>
-            input.IndexOf(value, comparison) >= 0;
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="input"/> or
+        ///     <paramref name="value"/> is <c>null</c>.
+        /// </exception>
+        public static bool Contains(string input, string value, StringComparison comparison) {
+            input.ThrowIfNull(nameof(input));
+            value.ThrowIfNull(nameof(value));
+            return input.IndexOf(value, comparison) >= 0;
+        }
     }
 }

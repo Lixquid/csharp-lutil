@@ -19,7 +19,6 @@ namespace LUtil.Helpers {
         private static readonly System.Random _randomDefault = new System.Random();
         private static readonly object _randomDefaultLock = new object();
 
-
         /// <summary>
         ///     Returns a random value from an enumerable.
         ///
@@ -33,6 +32,9 @@ namespace LUtil.Helpers {
         ///     your own source of randomness, see
         ///     <see cref="Random{T}(IEnumerable{T},System.Random)"/>.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
+        /// </exception>
         public static T Random<T>(IEnumerable<T> enumerable) {
             enumerable.ThrowIfNull(nameof(enumerable));
 
@@ -50,6 +52,9 @@ namespace LUtil.Helpers {
         /// <exception cref="InvalidOperationException">
         ///     Thrown if the source <paramref name="enumerable"/> contains no
         ///     elements.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
         public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable) {
             enumerable.ThrowIfNull(nameof(enumerable));
@@ -87,6 +92,10 @@ namespace LUtil.Helpers {
         ///     Thrown if the source <paramref name="enumerable"/> contains no
         ///     elements.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> or
+        ///     <paramref name="condition"/> is <c>null</c>.
+        /// </exception>
         public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, Func<T, bool> condition) {
             enumerable.ThrowIfNull(nameof(enumerable));
             condition.ThrowIfNull(nameof(condition));
@@ -120,6 +129,9 @@ namespace LUtil.Helpers {
         /// <exception cref="InvalidOperationException">
         ///     Thrown if the source <paramref name="enumerable"/> contains no
         ///     elements.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
         public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, int count) {
             enumerable.ThrowIfNull(nameof(enumerable));

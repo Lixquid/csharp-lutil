@@ -25,6 +25,9 @@ namespace LUtil.Helpers {
         ///     The condition to check when the enumerable is enumerated. If
         ///     <c>false</c> is returned, the enumerable will end.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="condition"/> is <c>null</c>.
+        /// </exception>
         public static IEnumerable<T> Repeat<T>(T value, Func<bool> condition) {
             condition.ThrowIfNull(nameof(condition));
             return GetIterator();

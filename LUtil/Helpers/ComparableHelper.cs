@@ -34,7 +34,6 @@ namespace LUtil.Helpers {
         ///     The inclusivity rules to use. See
         ///     <see cref="IsBetweenInclusivity"/>.
         /// </param>
-        /// <returns></returns>
         public static bool IsBetween<T>(
             T value,
             T min,

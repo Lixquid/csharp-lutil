@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
     public static class DictionaryHelper {
@@ -21,7 +22,11 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="dictionary" /> contains multiple values that would
         ///     resolve to the same key.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
         public static IDictionary<TValue, TKey> Reverse<TKey, TValue>(IDictionary<TKey, TValue> dictionary) {
+            dictionary.ThrowIfNull(nameof(dictionary));
             return ToDictionary(dictionary.Select(kp => (kp.Value, kp.Key)));
         }
 
@@ -39,7 +44,11 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The value at the key of the dictionary if it exists, a new instance of the key's type otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
         public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
+            dictionary.ThrowIfNull(nameof(dictionary));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
             dictionary[key] = new TValue();
@@ -64,7 +73,11 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The value at the key of the dictionary if it exists, the default value otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
         public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
+            dictionary.ThrowIfNull(nameof(dictionary));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
             dictionary[key] = default_value;
@@ -89,11 +102,17 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The value at the key of the dictionary if it exists, the generated default value otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> or
+        ///     <paramref name="default_delegate"/> is <c>null</c>.
+        /// </exception>
         public static TValue GetOrDefault<TKey, TValue>(
             IDictionary<TKey, TValue> dictionary,
             TKey key,
             Func<TKey, TValue> default_delegate
         ) {
+            dictionary.ThrowIfNull(nameof(dictionary));
+            default_delegate.ThrowIfNull(nameof(default_delegate));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
             dictionary[key] = default_delegate(key);
@@ -109,10 +128,14 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The specified value at the key in the dictionary, <c>null</c> otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
         public static TValue GetOrNull<TKey, TValue>(
             IDictionary<TKey, TValue> dictionary,
             TKey key
         ) where TValue : class {
+            dictionary.ThrowIfNull(nameof(dictionary));
             return dictionary.ContainsKey(key) ? dictionary[key] : null;
         }
 
@@ -125,10 +148,14 @@ namespace LUtil.Helpers {
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
         /// <returns>The specified value at the key in the dictionary, <c>null</c> otherwise.</returns>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
+        /// </exception>
         public static TValue? GetOrNullable<TKey, TValue>(
             IDictionary<TKey, TValue> dictionary,
             TKey key
         ) where TValue : struct {
+            dictionary.ThrowIfNull(nameof(dictionary));
             return dictionary.ContainsKey(key) ? (TValue?)dictionary[key] : null;
         }
 
@@ -139,10 +166,15 @@ namespace LUtil.Helpers {
         /// </summary>
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
+        /// </exception>
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
             IEnumerable<KeyValuePair<TKey, TValue>> enumerable
-        ) =>
-            enumerable.ToDictionary(kp => kp.Key, kp => kp.Value);
+        ) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+            return enumerable.ToDictionary(kp => kp.Key, kp => kp.Value);
+        }
 
         /// <summary>
         ///     Converts an enumerable of
@@ -151,10 +183,15 @@ namespace LUtil.Helpers {
         /// </summary>
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
+        /// </exception>
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
             IEnumerable<Tuple<TKey, TValue>> enumerable
-        ) =>
-            enumerable.ToDictionary(t => t.Item1, t => t.Item2);
+        ) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+            return enumerable.ToDictionary(t => t.Item1, t => t.Item2);
+        }
 
         /// <summary>
         ///     Converts an enumerable of
@@ -163,9 +200,14 @@ namespace LUtil.Helpers {
         /// </summary>
         /// <typeparam name="TKey">The type of the keys of the Dictionary.</typeparam>
         /// <typeparam name="TValue">The type of the values of the Dictionary.</typeparam>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
+        /// </exception>
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
             IEnumerable<ValueTuple<TKey, TValue>> enumerable
-        ) =>
-            enumerable.ToDictionary(t => t.Item1, t => t.Item2);
+        ) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+            return enumerable.ToDictionary(t => t.Item1, t => t.Item2);
+        }
     }
 }
