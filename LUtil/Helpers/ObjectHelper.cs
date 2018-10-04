@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LUtil.Helpers {
@@ -34,7 +35,7 @@ namespace LUtil.Helpers {
         }
 
         /// <summary>
-        ///     Returns a boolean indicating if hte given value is equal to any
+        ///     Returns a boolean indicating if the given value is equal to any
         ///     of the specified values.
         /// </summary>
         /// <typeparam name="T">The type of the checked value.</typeparam>
@@ -52,7 +53,7 @@ namespace LUtil.Helpers {
         ///     1, 2, or 4.
         /// </example>
         public static bool EqualTo<T>(T source, params T[] any) {
-            return any.Contains(source);
+            return any.Any(x => EqualityComparer<T>.Default.Equals(source, x));
         }
     }
 }
