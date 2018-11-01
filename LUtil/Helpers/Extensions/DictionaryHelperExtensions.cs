@@ -14,9 +14,9 @@ namespace LUtil.Helpers.Extensions {
         public static TValue GetOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             TKey key,
-            TValue default_value
+            TValue value
         ) =>
-            DictionaryHelper.GetOrDefault(dictionary, key, default_value);
+            DictionaryHelper.GetOrDefault(dictionary, key, value);
 
         /// <inheritdoc cref="DictionaryHelper.GetOrDefault{TKey,TValue}(IDictionary{TKey,TValue},TKey,Func{TKey,TValue})"/>
         public static TValue GetOrDefault<TKey, TValue>(
@@ -25,6 +25,29 @@ namespace LUtil.Helpers.Extensions {
             Func<TKey, TValue> default_delegate
         ) =>
             DictionaryHelper.GetOrDefault(dictionary, key, default_delegate);
+
+        /// <inheritdoc cref="DictionaryHelper.GetOrInsert{TKey,TValue}(IDictionary{TKey,TValue},TKey)"/>
+        public static TValue GetOrInsert<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key
+        ) where TValue : new() =>
+            DictionaryHelper.GetOrInsert(dictionary, key);
+
+        /// <inheritdoc cref="DictionaryHelper.GetOrInsert{TKey,TValue}(IDictionary{TKey,TValue},TKey,TValue)"/>
+        public static TValue GetOrInsert<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key,
+            TValue default_value
+        ) =>
+            DictionaryHelper.GetOrInsert(dictionary, key, default_value);
+
+        /// <inheritdoc cref="DictionaryHelper.GetOrInsert{TKey,TValue}(IDictionary{TKey,TValue},TKey,Func{TKey,TValue})"/>
+        public static TValue GetOrInsert<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key,
+            Func<TKey, TValue> default_delegate
+        ) =>
+            DictionaryHelper.GetOrInsert(dictionary, key, default_delegate);
 
         /// <inheritdoc cref="DictionaryHelper.GetOrNull{TKey,TValue}"/>
         public static TValue GetOrNull<TKey, TValue>(

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
     public static class MemberInfoHelper {
@@ -19,7 +20,11 @@ namespace LUtil.Helpers {
         ///     <see cref="FieldInfo"/>, <see cref="PropertyInfo"/>, or
         ///     <see cref="EventInfo"/>.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="member"/> is <c>null</c>.
+        /// </exception>
         public static Type GetMemberType(MemberInfo member) {
+            member.ThrowIfNull(nameof(member));
             switch (member.MemberType) {
                 case MemberTypes.Field:
                     return ((FieldInfo)member).FieldType;
@@ -54,7 +59,13 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="member"/> is not a
         ///     <see cref="FieldInfo"/> or <see cref="PropertyInfo"/>.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="member"/> or
+        ///     <paramref name="instance"/> is <c>null</c>.
+        /// </exception>
         public static object GetValue(MemberInfo member, object instance) {
+            member.ThrowIfNull(nameof(member));
+            instance.ThrowIfNull(nameof(instance));
             switch (member.MemberType) {
                 case MemberTypes.Field:
                     return ((FieldInfo)member).GetValue(instance);
@@ -86,7 +97,13 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="member"/> is not a
         ///     <see cref="FieldInfo"/> or <see cref="PropertyInfo"/>.
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="member"/> or
+        ///     <paramref name="instance"/> is <c>null</c>.
+        /// </exception>
         public static void SetValue(MemberInfo member, object instance, object value) {
+            member.ThrowIfNull(nameof(member));
+            instance.ThrowIfNull(nameof(instance));
             switch (member.MemberType) {
                 case MemberTypes.Field:
                     ((FieldInfo)member).SetValue(instance, value);

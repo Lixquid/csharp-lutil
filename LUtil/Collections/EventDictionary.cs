@@ -13,7 +13,7 @@ namespace LUtil.Collections {
     ///     The type of the values in the dictionary.
     /// </typeparam>
     public class EventDictionary<TKey, TValue> : IDictionary<TKey, TValue> {
-        internal readonly Dictionary<TKey, TValue> DictionaryImplementation;
+        private readonly Dictionary<TKey, TValue> DictionaryImplementation;
 
         #region Events
 
@@ -31,7 +31,7 @@ namespace LUtil.Collections {
         ///     Occurs when <see cref="Dictionary{TKey,TValue}.Clear" /> is
         ///     called on the Dictionary.
         /// </summary>
-        public event EventHandler DictionaryCleared;
+        public event EventHandler ItemsCleared;
 
         #endregion
 
@@ -43,68 +43,76 @@ namespace LUtil.Collections {
         }
 
         /// <inheritdoc cref="Dictionary{TKey,TValue}(IDictionary{TKey,TValue})" />
-        public EventDictionary( IDictionary<TKey, TValue> dictionary ) {
-            DictionaryImplementation = new Dictionary<TKey, TValue>( dictionary );
+        public EventDictionary(IDictionary<TKey, TValue> dictionary) {
+            DictionaryImplementation = new Dictionary<TKey, TValue>(dictionary);
         }
 
         /// <inheritdoc cref="Dictionary{TKey,TValue}(IDictionary{TKey,TValue}, IEqualityComparer{TKey})" />
-        public EventDictionary( IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer ) {
-            DictionaryImplementation = new Dictionary<TKey, TValue>( dictionary, comparer );
+        public EventDictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer) {
+            DictionaryImplementation = new Dictionary<TKey, TValue>(dictionary, comparer);
         }
 
         /// <inheritdoc cref="Dictionary{TKey,TValue}(IEqualityComparer{TKey})" />
-        public EventDictionary( IEqualityComparer<TKey> comparer ) {
-            DictionaryImplementation = new Dictionary<TKey, TValue>( comparer );
+        public EventDictionary(IEqualityComparer<TKey> comparer) {
+            DictionaryImplementation = new Dictionary<TKey, TValue>(comparer);
         }
 
         /// <inheritdoc cref="Dictionary{TKey,TValue}(int)" />
-        public EventDictionary( int capacity ) {
-            DictionaryImplementation = new Dictionary<TKey, TValue>( capacity );
+        public EventDictionary(int capacity) {
+            DictionaryImplementation = new Dictionary<TKey, TValue>(capacity);
         }
 
         /// <inheritdoc cref="Dictionary{TKey,TValue}(int, IEqualityComparer{TKey})" />
-        public EventDictionary( int capacity, IEqualityComparer<TKey> comparer ) {
-            DictionaryImplementation = new Dictionary<TKey, TValue>( capacity, comparer );
+        public EventDictionary(int capacity, IEqualityComparer<TKey> comparer) {
+            DictionaryImplementation = new Dictionary<TKey, TValue>(capacity, comparer);
         }
+
+        #endregion
+
+        #region Raw Access Methods
+
+        protected internal void RawSet(TKey key, TValue value) => DictionaryImplementation[key] = value;
+        protected internal bool RawRemove(TKey key) => DictionaryImplementation.Remove(key);
+        protected internal void RawClear() => DictionaryImplementation.Clear();
 
         #endregion
 
         #region Evented Methods
 
-        public TValue this[ TKey key ] {
+        public TValue this[TKey key] {
             get => DictionaryImplementation[key];
             set {
                 DictionaryImplementation[key] = value;
-                ItemSet?.Invoke( this, new KeyValuePair<TKey, TValue>( key, value ) );
+                ItemSet?.Invoke(this, new KeyValuePair<TKey, TValue>(key, value));
             }
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.Add( KeyValuePair<TKey, TValue> item ) {
-            ( (ICollection<KeyValuePair<TKey, TValue>>) DictionaryImplementation ).Add( item );
-            ItemSet?.Invoke( this, item );
+        void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) {
+            ((ICollection<KeyValuePair<TKey, TValue>>)DictionaryImplementation).Add(item);
+            ItemSet?.Invoke(this, item);
         }
 
         public void Clear() {
             DictionaryImplementation.Clear();
-            DictionaryCleared?.Invoke( this, null );
+            ItemsCleared?.Invoke(this, null);
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Remove( KeyValuePair<TKey, TValue> item ) {
-            var output = ( (ICollection<KeyValuePair<TKey, TValue>>) DictionaryImplementation ).Remove( item );
-            if ( output ) ItemRemoved?.Invoke( this, item );
+        bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item) {
+            var output = ((ICollection<KeyValuePair<TKey, TValue>>)DictionaryImplementation).Remove(item);
+            if (output) ItemRemoved?.Invoke(this, item);
 
             return output;
         }
 
-        public void Add( TKey key, TValue value ) {
-            DictionaryImplementation.Add( key, value );
-            ItemSet?.Invoke( this, new KeyValuePair<TKey, TValue>( key, value ) );
+        public void Add(TKey key, TValue value) {
+            DictionaryImplementation.Add(key, value);
+            ItemSet?.Invoke(this, new KeyValuePair<TKey, TValue>(key, value));
         }
 
-        public bool Remove( TKey key ) {
-            DictionaryImplementation.TryGetValue( key, out var removed_value );
-            var output = DictionaryImplementation.Remove( key );
-            if ( output ) ItemRemoved?.Invoke( this, new KeyValuePair<TKey, TValue>( key, removed_value ) );
+        public bool Remove(TKey key) {
+            DictionaryImplementation.TryGetValue(key, out var removed_value);
+            var output = DictionaryImplementation.Remove(key);
+            if (output) ItemRemoved?.Invoke(this, new KeyValuePair<TKey, TValue>(key, removed_value));
 
             return output;
         }
@@ -118,28 +126,28 @@ namespace LUtil.Collections {
         }
 
         IEnumerator IEnumerable.GetEnumerator() {
-            return ( (IEnumerable) DictionaryImplementation ).GetEnumerator();
+            return ((IEnumerable)DictionaryImplementation).GetEnumerator();
         }
 
-        bool ICollection<KeyValuePair<TKey, TValue>>.Contains( KeyValuePair<TKey, TValue> item ) {
-            return ( (ICollection<KeyValuePair<TKey, TValue>>) DictionaryImplementation ).Contains( item );
+        bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item) {
+            return ((ICollection<KeyValuePair<TKey, TValue>>)DictionaryImplementation).Contains(item);
         }
 
-        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo( KeyValuePair<TKey, TValue>[] array, int arrayIndex ) {
-            ( (ICollection<KeyValuePair<TKey, TValue>>) DictionaryImplementation ).CopyTo( array, arrayIndex );
+        void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) {
+            ((ICollection<KeyValuePair<TKey, TValue>>)DictionaryImplementation).CopyTo(array, arrayIndex);
         }
 
         public int Count => DictionaryImplementation.Count;
 
         bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly =>
-            ( (ICollection<KeyValuePair<TKey, TValue>> ) DictionaryImplementation ).IsReadOnly;
+            ((ICollection<KeyValuePair<TKey, TValue>>)DictionaryImplementation).IsReadOnly;
 
-        public bool ContainsKey( TKey key ) {
-            return DictionaryImplementation.ContainsKey( key );
+        public bool ContainsKey(TKey key) {
+            return DictionaryImplementation.ContainsKey(key);
         }
 
-        public bool TryGetValue( TKey key, out TValue value ) {
-            return DictionaryImplementation.TryGetValue( key, out value );
+        public bool TryGetValue(TKey key, out TValue value) {
+            return DictionaryImplementation.TryGetValue(key, out value);
         }
 
         public ICollection<TKey> Keys => DictionaryImplementation.Keys;
