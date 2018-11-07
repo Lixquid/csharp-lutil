@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class MemberInfoHelper {
         /// <summary>
         ///     Returns the <see cref="Type"/> of the member. Only works with
@@ -23,7 +25,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="member"/> is <c>null</c>.
         /// </exception>
-        public static Type GetMemberType(MemberInfo member) {
+        public static Type GetMemberType([NotNull] MemberInfo member) {
             member.ThrowIfNull(nameof(member));
             switch (member.MemberType) {
                 case MemberTypes.Field:
@@ -63,7 +65,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="member"/> or
         ///     <paramref name="instance"/> is <c>null</c>.
         /// </exception>
-        public static object GetValue(MemberInfo member, object instance) {
+        public static object GetValue([NotNull] MemberInfo member, [NotNull] object instance) {
             member.ThrowIfNull(nameof(member));
             instance.ThrowIfNull(nameof(instance));
             switch (member.MemberType) {
@@ -101,7 +103,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="member"/> or
         ///     <paramref name="instance"/> is <c>null</c>.
         /// </exception>
-        public static void SetValue(MemberInfo member, object instance, object value) {
+        public static void SetValue([NotNull] MemberInfo member, [NotNull] object instance, object value) {
             member.ThrowIfNull(nameof(member));
             instance.ThrowIfNull(nameof(instance));
             switch (member.MemberType) {

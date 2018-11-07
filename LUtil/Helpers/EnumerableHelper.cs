@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class EnumerableHelper {
         /// <summary>
         ///     Returns a random value from an enumerable.
@@ -13,7 +15,7 @@ namespace LUtil.Helpers {
         /// <typeparam name="T">The type enumerated in the enumerable.</typeparam>
         /// <param name="enumerable">The enumerable to get a random value from.</param>
         /// <param name="random">The source of randomness.</param>
-        public static T Random<T>(IEnumerable<T> enumerable, System.Random random) =>
+        public static T Random<T>([NotNull, InstantHandle] IEnumerable<T> enumerable, [NotNull] System.Random random) =>
             RandomHelper.NextFromEnumerable(random, enumerable);
 
         private static readonly System.Random _randomDefault = new System.Random();
@@ -35,7 +37,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
-        public static T Random<T>(IEnumerable<T> enumerable) {
+        public static T Random<T>([NotNull, InstantHandle] IEnumerable<T> enumerable) {
             enumerable.ThrowIfNull(nameof(enumerable));
 
             lock (_randomDefaultLock) {
@@ -56,7 +58,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable) {
+        public static IEnumerable<T> Repeat<T>([NotNull, InstantHandle] IEnumerable<T> enumerable) {
             enumerable.ThrowIfNull(nameof(enumerable));
 
             // Create a new list to avoid problems with the enumerable mutating
@@ -96,7 +98,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="enumerable"/> or
         ///     <paramref name="condition"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, Func<T, bool> condition) {
+        public static IEnumerable<T> Repeat<T>([NotNull, InstantHandle] IEnumerable<T> enumerable, [NotNull] Func<T, bool> condition) {
             enumerable.ThrowIfNull(nameof(enumerable));
             condition.ThrowIfNull(nameof(condition));
 
@@ -133,7 +135,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<T> Repeat<T>(IEnumerable<T> enumerable, int count) {
+        public static IEnumerable<T> Repeat<T>([NotNull, InstantHandle] IEnumerable<T> enumerable, int count) {
             enumerable.ThrowIfNull(nameof(enumerable));
             if (count < 0)
                 throw new ArgumentOutOfRangeException(nameof(count));

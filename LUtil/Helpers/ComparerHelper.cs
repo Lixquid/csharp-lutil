@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class ComparerHelper {
         /// <summary>
         ///     Creates a new <see cref="Comparison{T}"/> delegate that defers
@@ -16,7 +19,10 @@ namespace LUtil.Helpers {
         ///     To create a comparer from a comparison delegate, see
         ///     <see cref="Comparer{T}.Create(Comparison{T})"/>.
         /// </remarks>
-        public static Comparison<T> ToComparison<T>(IComparer<T> comparer) =>
-            delegate (T x, T y) { return comparer.Compare(x, y); };
+        [Pure]
+        public static Comparison<T> ToComparison<T>([NotNull] IComparer<T> comparer) {
+            comparer.ThrowIfNull(nameof(comparer));
+            return delegate (T x, T y) { return comparer.Compare(x, y); };
+        }
     }
 }

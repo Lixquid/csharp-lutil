@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class DictionaryHelper {
         /// <summary>
         ///     Returns a new Dictionary, whose keys are the values of the input
@@ -34,7 +36,8 @@ namespace LUtil.Helpers {
         ///         // = Dictionary<string, int>(2) { { "one", 1 }, { "two", 2 } }
         ///     ]]></code>
         /// </example>
-        public static IDictionary<TValue, TKey> Reverse<TKey, TValue>(IDictionary<TKey, TValue> dictionary) {
+        [Pure]
+        public static IDictionary<TValue, TKey> Reverse<TKey, TValue>([NotNull] IDictionary<TKey, TValue> dictionary) {
             dictionary.ThrowIfNull(nameof(dictionary));
             return ToDictionary(dictionary.Select(kp => (kp.Value, kp.Key)));
         }
@@ -56,7 +59,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key)
+        public static TValue GetOrDefault<TKey, TValue>([NotNull] IDictionary<TKey, TValue> dictionary, TKey key)
             where TValue : new() {
             dictionary.ThrowIfNull(nameof(dictionary));
             return dictionary.ContainsKey(key) ? dictionary[key] : new TValue();
@@ -90,7 +93,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
+        public static TValue GetOrDefault<TKey, TValue>([NotNull] IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
             dictionary.ThrowIfNull(nameof(dictionary));
             return dictionary.ContainsKey(key) ? dictionary[key] : default_value;
         }
@@ -117,8 +120,8 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="dictionary"/> or
         ///     <paramref name="default_delegate"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrDefault<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key,
-            Func<TKey, TValue> default_delegate) {
+        public static TValue GetOrDefault<TKey, TValue>([NotNull] IDictionary<TKey, TValue> dictionary, TKey key,
+            [NotNull] Func<TKey, TValue> default_delegate) {
             dictionary.ThrowIfNull(nameof(dictionary));
             default_delegate.ThrowIfNull(nameof(default_delegate));
             return dictionary.ContainsKey(key) ? dictionary[key] : default_delegate(key);
@@ -141,7 +144,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrInsert<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
+        public static TValue GetOrInsert<TKey, TValue>([NotNull] IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new() {
             dictionary.ThrowIfNull(nameof(dictionary));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
@@ -177,7 +180,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
-        public static TValue GetOrInsert<TKey, TValue>(IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
+        public static TValue GetOrInsert<TKey, TValue>([NotNull] IDictionary<TKey, TValue> dictionary, TKey key, TValue default_value) {
             dictionary.ThrowIfNull(nameof(dictionary));
             if (dictionary.ContainsKey(key))
                 return dictionary[key];
@@ -208,9 +211,9 @@ namespace LUtil.Helpers {
         ///     <paramref name="default_delegate"/> is <c>null</c>.
         /// </exception>
         public static TValue GetOrInsert<TKey, TValue>(
-            IDictionary<TKey, TValue> dictionary,
+            [NotNull] IDictionary<TKey, TValue> dictionary,
             TKey key,
-            Func<TKey, TValue> default_delegate
+            [NotNull] Func<TKey, TValue> default_delegate
         ) {
             dictionary.ThrowIfNull(nameof(dictionary));
             default_delegate.ThrowIfNull(nameof(default_delegate));
@@ -233,7 +236,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
         public static TValue GetOrNull<TKey, TValue>(
-            IDictionary<TKey, TValue> dictionary,
+            [NotNull] IDictionary<TKey, TValue> dictionary,
             TKey key
         ) where TValue : class {
             dictionary.ThrowIfNull(nameof(dictionary));
@@ -253,7 +256,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="dictionary"/> is <c>null</c>.
         /// </exception>
         public static TValue? GetOrNullable<TKey, TValue>(
-            IDictionary<TKey, TValue> dictionary,
+            [NotNull] IDictionary<TKey, TValue> dictionary,
             TKey key
         ) where TValue : struct {
             dictionary.ThrowIfNull(nameof(dictionary));
@@ -271,7 +274,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
-            IEnumerable<KeyValuePair<TKey, TValue>> enumerable
+            [NotNull] IEnumerable<KeyValuePair<TKey, TValue>> enumerable
         ) {
             enumerable.ThrowIfNull(nameof(enumerable));
             return enumerable.ToDictionary(kp => kp.Key, kp => kp.Value);
@@ -288,7 +291,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
-            IEnumerable<Tuple<TKey, TValue>> enumerable
+            [NotNull] IEnumerable<Tuple<TKey, TValue>> enumerable
         ) {
             enumerable.ThrowIfNull(nameof(enumerable));
             return enumerable.ToDictionary(t => t.Item1, t => t.Item2);
@@ -305,7 +308,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
-            IEnumerable<ValueTuple<TKey, TValue>> enumerable
+            [NotNull] IEnumerable<ValueTuple<TKey, TValue>> enumerable
         ) {
             enumerable.ThrowIfNull(nameof(enumerable));
             return enumerable.ToDictionary(t => t.Item1, t => t.Item2);

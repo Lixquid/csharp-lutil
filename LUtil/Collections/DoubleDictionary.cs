@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using LUtil.Helpers;
 
 namespace LUtil.Collections {
+    [PublicAPI]
     public class DoubleDictionary<TForward, TBackward> : IDictionary<TForward, TBackward> {
         private readonly EventDictionary<TBackward, TForward> _backwardInternal;
         private readonly EventDictionary<TForward, TBackward> _forwardInternal;
+        [NotNull]
         public IDictionary<TForward, TBackward> Forward => _forwardInternal;
+        [NotNull]
         public IDictionary<TBackward, TForward> Backward => _backwardInternal;
 
         #region Added Events

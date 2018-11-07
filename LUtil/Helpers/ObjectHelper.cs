@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class ObjectHelper {
         /// <summary>
         ///     Throws an <see cref="ArgumentNullException"/> if the given

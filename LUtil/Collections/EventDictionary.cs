@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace LUtil.Collections {
     /// <summary>
@@ -12,6 +13,7 @@ namespace LUtil.Collections {
     /// <typeparam name="TValue">
     ///     The type of the values in the dictionary.
     /// </typeparam>
+    [PublicAPI]
     public class EventDictionary<TKey, TValue> : IDictionary<TKey, TValue> {
         private readonly Dictionary<TKey, TValue> DictionaryImplementation;
 

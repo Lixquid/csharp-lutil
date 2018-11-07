@@ -1,6 +1,8 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class ComparableHelper {
         /// <summary>
         ///     Returns if a value is between two other values, inclusive.

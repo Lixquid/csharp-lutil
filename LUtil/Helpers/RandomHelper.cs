@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class RandomHelper {
         /// <summary>
         ///     Generates a new random string of the specified length, composed
@@ -20,7 +22,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="random"/> or
         ///     <paramref name="source"/> is <c>null</c>.
         /// </exception>
-        public static string NextString(System.Random random, int length, IList<char> source) {
+        public static string NextString([NotNull] System.Random random, int length, [NotNull] IList<char> source) {
             random.ThrowIfNull(nameof(random));
             source.ThrowIfNull(nameof(source));
 
@@ -34,10 +36,11 @@ namespace LUtil.Helpers {
 
         /// <inheritdoc cref="NextString(System.Random,int,System.Collections.Generic.IList{char})"/>
         public static string NextString(
-            System.Random random,
+            [NotNull] System.Random random,
             int length,
-            string source = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            [NotNull] string source = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ) {
+            random.ThrowIfNull(nameof(random));
             source.ThrowIfNull(nameof(source));
             return NextString(random, length, source.ToCharArray());
         }
@@ -52,7 +55,7 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="random"/> or
         ///     <paramref name="enumerable"/> is <c>null</c>.
         /// </exception>
-        public static T NextFromEnumerable<T>(System.Random random, IEnumerable<T> enumerable) {
+        public static T NextFromEnumerable<T>([NotNull] System.Random random, [NotNull, InstantHandle] IEnumerable<T> enumerable) {
             random.ThrowIfNull(nameof(random));
             enumerable.ThrowIfNull(nameof(enumerable));
 
@@ -69,7 +72,7 @@ namespace LUtil.Helpers {
         /// <exception cref="System.ArgumentNullException">
         ///     Thrown if <paramref name="random"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<double> GetDoubleEnumerable(System.Random random) {
+        public static IEnumerable<double> GetDoubleEnumerable([NotNull] System.Random random) {
             random.ThrowIfNull(nameof(random));
             return GetIterator();
 
@@ -88,7 +91,7 @@ namespace LUtil.Helpers {
         /// <exception cref="System.ArgumentNullException">
         ///     Thrown if <paramref name="random"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<int> GetIntEnumerable(System.Random random) {
+        public static IEnumerable<int> GetIntEnumerable([NotNull] System.Random random) {
             random.ThrowIfNull(nameof(random));
             return GetIterator();
 

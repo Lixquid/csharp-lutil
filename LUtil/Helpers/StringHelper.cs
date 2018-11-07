@@ -1,7 +1,9 @@
 ﻿using System;
+using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class StringHelper {
         /// <summary>
         ///     Returns a value indicating whether a specified substring occurs
@@ -20,7 +22,8 @@ namespace LUtil.Helpers {
         ///     Thrown if <paramref name="input"/> or
         ///     <paramref name="value"/> is <c>null</c>.
         /// </exception>
-        public static bool Contains(string input, string value, StringComparison comparison) {
+        [Pure]
+        public static bool Contains([NotNull] string input, [NotNull] string value, StringComparison comparison) {
             input.ThrowIfNull(nameof(input));
             value.ThrowIfNull(nameof(value));
             return input.IndexOf(value, comparison) >= 0;

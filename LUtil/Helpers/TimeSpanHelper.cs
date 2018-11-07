@@ -1,6 +1,8 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace LUtil.Helpers {
+    [PublicAPI]
     public static class TimeSpanHelper {
         /// <summary>
         ///     Returns a new <see cref="TimeSpan" /> that multiplies the given
@@ -12,10 +14,12 @@ namespace LUtil.Helpers {
         ///     An object whose value is the result of multiplying the given
         ///     duration by the amount given.
         /// </returns>
+        [Pure]
         public static TimeSpan Multiply(TimeSpan input, double value) =>
             TimeSpan.FromTicks((long)(input.Ticks * value));
 
         /// <inheritdoc cref="Multiply(System.TimeSpan,double)"/>
+        [Pure]
         public static TimeSpan Multiply(TimeSpan input, long value) =>
             TimeSpan.FromTicks(input.Ticks * value);
 
@@ -29,10 +33,12 @@ namespace LUtil.Helpers {
         ///     An object whose value is the result of dividing the given
         ///     duration by the amount given.
         /// </returns>
+        [Pure]
         public static TimeSpan Divide(TimeSpan input, double value) =>
             TimeSpan.FromTicks((long)(input.Ticks / value));
 
         /// <inheritdoc cref="Divide(System.TimeSpan,double)"/>
+        [Pure]
         public static TimeSpan Divide(TimeSpan input, long value) =>
             TimeSpan.FromTicks(input.Ticks / value);
 
@@ -46,6 +52,7 @@ namespace LUtil.Helpers {
         ///     The given <see cref="TimeSpan"/> if it has a positive value,
         ///     a new one with a negated value if it has a negative value.
         /// </returns>
+        [Pure]
         public static TimeSpan Abs(TimeSpan input) =>
             input.Ticks < 0 ? input.Negate() : input;
     }

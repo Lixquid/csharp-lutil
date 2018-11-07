@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
+using JetBrains.Annotations;
+using LUtil.Helpers.Extensions;
 
 namespace LUtil.Random {
+    [PublicAPI]
     public class RNGRandom : System.Random {
         private RandomNumberGenerator Source { get; }
 
@@ -10,7 +13,8 @@ namespace LUtil.Random {
         ///     <see cref="RandomNumberGenerator"/> source.
         /// </summary>
         /// <param name="source">The Random source to use.</param>
-        public RNGRandom(RandomNumberGenerator source) {
+        public RNGRandom([NotNull] RandomNumberGenerator source) {
+            source.ThrowIfNull(nameof(source));
             Source = source;
         }
 
