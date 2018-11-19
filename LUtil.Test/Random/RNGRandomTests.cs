@@ -11,7 +11,11 @@ namespace LUtil.Test.Random {
         private class MockRNG : RandomNumberGenerator {
             private byte Counter { get; set; } = 0;
 
-            private byte GetByte() => Counter++;
+            private byte GetByte() {
+                unchecked {
+                    return Counter++;
+                }
+            }
 
             public override void GetBytes(byte[] data) {
                 for (var i = 0; i < data.Length; i++) {
