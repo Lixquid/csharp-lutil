@@ -118,7 +118,7 @@ namespace LUtil.Helpers {
         /// <exception cref="System.ArgumentNullException">
         ///     Thrown if <paramref name="random"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<int> GetIntEnumerable(System.Random random, int maxValue) {
+        public static IEnumerable<int> GetIntEnumerable([NotNull] System.Random random, int maxValue) {
             random.ThrowIfNull(nameof(random));
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             random.Next(maxValue);
@@ -149,7 +149,7 @@ namespace LUtil.Helpers {
         /// <exception cref="System.ArgumentNullException">
         ///     Thrown if <paramref name="random"/> is <c>null</c>.
         /// </exception>
-        public static IEnumerable<int> GetIntEnumerable(System.Random random, int minValue, int maxValue) {
+        public static IEnumerable<int> GetIntEnumerable([NotNull] System.Random random, int minValue, int maxValue) {
             random.ThrowIfNull(nameof(random));
             // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             random.Next(minValue, maxValue);

@@ -28,7 +28,7 @@ namespace LUtil.Helpers {
         /// <exception cref="ArgumentNullException">
         ///     Thrown if <paramref name="value"/> is <c>null</c>.
         /// </exception>
-        public static void ThrowIfNull(object value, string name = null) {
+        public static void ThrowIfNull(object value, [InvokerParameterName] string name = null) {
             if (value != null) return;
 
             if (name == null)

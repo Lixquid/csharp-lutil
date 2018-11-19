@@ -4,7 +4,7 @@ namespace LUtil.Helpers.Extensions {
     [PublicAPI]
     public static class ObjectHelperExtensions {
         /// <inheritdoc cref="ObjectHelper.ThrowIfNull"/>
-        public static void ThrowIfNull(this object value, string name = null) =>
+        public static void ThrowIfNull(this object value, [InvokerParameterName] string name = null) =>
             ObjectHelper.ThrowIfNull(value, name);
 
         /// <inheritdoc cref="ObjectHelper.EqualTo{T}"/>
