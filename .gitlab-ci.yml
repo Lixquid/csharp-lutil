@@ -1,0 +1,6 @@
+image: microsoft/dotnet:latest
+
+test:
+  script:
+    - dotnet build
+    - dotnet test
