@@ -78,6 +78,30 @@ namespace LUtil.Helpers {
         }
 
         /// <summary>
+        ///     Returns a random Guid.
+        /// </summary>
+        /// <remarks>
+        ///     This should only be used for idempotent Guid generation, for
+        ///     example for testing / mocking. For most use cases, <see
+        ///     cref="Guid.NewGuid"/> is sufficient.
+        /// </remarks>
+        /// <param name="random">The source of randomness.</param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     Thrown if <paramref name="random"/> is <c>null</c>.
+        /// </exception>
+        public static Guid NextGuid([NotNull] System.Random random) {
+            random.ThrowIfNull(nameof(random));
+
+            var bytes = new byte[16];
+            random.NextBytes(bytes);
+            // Version 4
+            bytes[7] = (byte)(bytes[7] & ~0xf0 | 0x40);
+            // Variant 1
+            bytes[9] = (byte)(bytes[9] & ~0xc0 | 0x80);
+            return new Guid(bytes);
+        }
+
+        /// <summary>
         ///     Returns an infinite enumerable that returns <c>double</c>s
         ///     between 0 inclusive and 1 exclusive from a
         ///     <see cref="System.Random"/>.

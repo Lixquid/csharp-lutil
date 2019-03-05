@@ -25,6 +25,10 @@ namespace LUtil.Helpers.Extensions {
         public static bool NextBoolean([NotNull] this System.Random random) =>
             RandomHelper.NextBoolean(random);
 
+        /// <inheritdoc cref="RandomHelper.NextGuid(System.Random)"/>
+        public static Guid NextGuid([NotNull] this System.Random random) =>
+            RandomHelper.NextGuid(random);
+
         /// <inheritdoc cref="RandomHelper.GetDoubleEnumerable"/>
         public static IEnumerable<double> GetDoubleEnumerable([NotNull] this System.Random random) =>
             RandomHelper.GetDoubleEnumerable(random);
