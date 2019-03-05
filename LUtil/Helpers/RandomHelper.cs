@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
@@ -61,6 +62,19 @@ namespace LUtil.Helpers {
 
             var list = enumerable as IList<T> ?? enumerable.ToList();
             return list[random.Next(list.Count)];
+        }
+
+        /// <summary>
+        ///     Returns a random boolean.
+        /// </summary>
+        /// <param name="random">The source of randomness.</param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     Thrown if <paramref name="random"/> is <c>null</c>.
+        /// </exception>
+        public static bool NextBoolean([NotNull] System.Random random) {
+            random.ThrowIfNull(nameof(random));
+
+            return random.NextDouble() < .5;
         }
 
         /// <summary>
