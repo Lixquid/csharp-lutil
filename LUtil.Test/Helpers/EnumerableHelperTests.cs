@@ -1,4 +1,5 @@
-﻿using LUtil.Helpers.Extensions;
+using System.Linq;
+using LUtil.Helpers.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LUtil.Test.Helpers {
@@ -35,6 +36,12 @@ namespace LUtil.Test.Helpers {
                 i++;
             }
             Assert.AreEqual(enumerable.Length * 3, i);
+        }
+
+        [TestMethod]
+        public void Concat() {
+            var enumerable = new[] { 1, 2, 3 };
+            CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, enumerable.Concat(4, 5).ToList());
         }
     }
 }

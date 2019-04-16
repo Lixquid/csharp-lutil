@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -153,6 +153,23 @@ namespace LUtil.Helpers {
                     }
                 }
             }
+        }
+
+        /// <summary>
+        ///     Returns a new enumerable which includes the specified value(s)
+        ///     at the end.
+        /// </summary>
+        /// <typeparam name="T">The type of value returned in the Enumerable.</typeparam>
+        /// <param name="enumerable">The enumerable to add values to.</param>
+        /// <param name="values">The value(s) to be appended.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> or
+        ///     <paramref name="values"/> is <c>null</c>.
+        /// </exception>
+        public static IEnumerable<T> Concat<T>([NotNull] IEnumerable<T> enumerable, params T[] values) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+            values.ThrowIfNull(nameof(values));
+            return Enumerable.Concat(enumerable, values);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -24,5 +24,9 @@ namespace LUtil.Helpers.Extensions {
         /// <inheritdoc cref="EnumerableHelper.Repeat{T}(IEnumerable{T},int)"/>
         public static IEnumerable<T> Repeat<T>([NotNull, InstantHandle] this IEnumerable<T> enumerable, int count) =>
             EnumerableHelper.Repeat(enumerable, count);
+
+        /// <inheritdoc cref="EnumerableHelper.Concat{T}(IEnumerable{T},T[])"/>
+        public static IEnumerable<T> Concat<T>([NotNull] this IEnumerable<T> enumerable, params T[] values) =>
+            EnumerableHelper.Concat(enumerable, values);
     }
 }
