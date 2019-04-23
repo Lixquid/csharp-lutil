@@ -28,5 +28,14 @@ namespace LUtil.Helpers.Extensions {
         /// <inheritdoc cref="EnumerableHelper.Concat{T}(IEnumerable{T},T[])"/>
         public static IEnumerable<T> Concat<T>([NotNull] this IEnumerable<T> enumerable, params T[] values) =>
             EnumerableHelper.Concat(enumerable, values);
+
+        /// <inheritdoc cref="EnumerableHelper.Shuffle{T}(IEnumerable{T},System.Random)"/>
+        public static IEnumerable<T> Shuffle<T>([NotNull, InstantHandle] this IEnumerable<T> enumerable,
+            System.Random random) =>
+            EnumerableHelper.Shuffle(enumerable, random);
+
+        /// <inheritdoc cref="EnumerableHelper.Shuffle{T}(IEnumerable{T})"/>
+        public static IEnumerable<T> Shuffle<T>([NotNull, InstantHandle] this IEnumerable<T> enumerable) =>
+            EnumerableHelper.Shuffle(enumerable);
     }
 }

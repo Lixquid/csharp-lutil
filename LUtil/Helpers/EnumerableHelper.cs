@@ -172,5 +172,58 @@ namespace LUtil.Helpers {
             return Enumerable.Concat(enumerable, values);
         }
 
+        /// <summary>
+        ///     Returns a copy of the given enumerable, shuffled with the
+        ///     Fisher-Yates algorithm.
+        /// </summary>
+        /// <typeparam name="T">The type of value returned in the Enumerable.</typeparam>
+        /// <param name="enumerable">The enumerable to be shuffled.</param>
+        /// <param name="random">The source of randomness.</param>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> or
+        ///     <paramref name="random"/> is <c>null</c>.
+        /// </exception>>
+        public static IEnumerable<T> Shuffle<T>([NotNull, InstantHandle] IEnumerable<T> enumerable,
+            [NotNull] System.Random random) {
+
+            enumerable.ThrowIfNull(nameof(enumerable));
+            random.ThrowIfNull(nameof(random));
+
+            var output = new List<T>(enumerable);
+            var n = output.Count;
+            while (n > 1) {
+                n--;
+                var k = random.Next(n + 1);
+                var swap = output[k];
+                output[k] = output[n];
+                output[n] = swap;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        ///     Returns a copy of the given enumerable, shuffled with the
+        ///     Fisher-Yates algorithm.
+        /// </summary>
+        /// <typeparam name="T">The type of value returned in the Enumerable.</typeparam>
+        /// <param name="enumerable">The enumerable to be shuffled.</param>
+        /// <remarks>
+        ///     Behind the scenes, this uses a <c>static</c>, <c>lock</c>ed
+        ///     <see cref="System.Random"/> to generate random values. To use
+        ///     your own source of randomness, see
+        ///     <see cref="Random{T}(IEnumerable{T},System.Random)"/>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown if <paramref name="enumerable"/> is <c>null</c>.
+        /// </exception>
+        public static IEnumerable<T> Shuffle<T>([NotNull, InstantHandle] IEnumerable<T> enumerable) {
+            enumerable.ThrowIfNull(nameof(enumerable));
+
+            lock (_randomDefaultLock) {
+                return Shuffle(enumerable, _randomDefault);
+            }
+        }
+
     }
 }

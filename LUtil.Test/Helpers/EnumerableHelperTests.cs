@@ -43,5 +43,11 @@ namespace LUtil.Test.Helpers {
             var enumerable = new[] { 1, 2, 3 };
             CollectionAssert.AreEqual(new[] { 1, 2, 3, 4, 5 }, enumerable.Concat(4, 5).ToList());
         }
+
+        [TestMethod]
+        public void Shuffle() {
+            var enumerable = new[] { 1, 2, 3 };
+            CollectionAssert.AreEquivalent(new[] { 1, 2, 3 }, enumerable.Shuffle().ToList());
+        }
     }
 }
