@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -62,6 +62,24 @@ namespace LUtil.Helpers {
 
             var list = enumerable as IList<T> ?? enumerable.ToList();
             return list[random.Next(list.Count)];
+        }
+
+        /// <summary>
+        ///     Returns a random value from an enum.
+        /// </summary>
+        /// <typeparam name="T">The enum to return a value from.</typeparam>
+        /// <param name="random">The source of randomness.</param>
+        /// <exception cref="System.ArgumentNullException">
+        ///     Thrown if <paramref name="random"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="System.InvalidOperationException">
+        ///     Thrown if <typeparamref name="T"/> is not an <c>enum</c>.
+        /// </exception>
+        public static T NextFromEnum<T>([NotNull] System.Random random) {
+            random.ThrowIfNull(nameof(random));
+            if (!typeof(T).IsEnum)
+                throw new InvalidOperationException($"Type {typeof(T)} is not an enum");
+            return NextFromEnumerable(random, Enum.GetValues(typeof(T)).Cast<T>());
         }
 
         /// <summary>

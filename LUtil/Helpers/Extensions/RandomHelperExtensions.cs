@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -20,6 +20,10 @@ namespace LUtil.Helpers.Extensions {
         /// <inheritdoc cref="RandomHelper.NextFromEnumerable{T}(System.Random,IEnumerable{T})"/>
         public static T NextFromEnumerable<T>([NotNull] this System.Random random, [NotNull, InstantHandle] IEnumerable<T> enumerable) =>
             RandomHelper.NextFromEnumerable(random, enumerable);
+
+        /// <inheritdoc cref="RandomHelper.NextFromEnum{T}(System.Random)"/>
+        public static T NextFromEnum<T>([NotNull] this System.Random random) =>
+            RandomHelper.NextFromEnum<T>(random);
 
         /// <inheritdoc cref="RandomHelper.NextBoolean(System.Random)"/>
         public static bool NextBoolean([NotNull] this System.Random random) =>

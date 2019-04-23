@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using LUtil.Helpers.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -37,6 +37,20 @@ namespace LUtil.Test.Helpers {
 
             foreach (var _ in Enumerable.Range(0, 100)) {
                 CollectionAssert.Contains(enumerable, random.NextFromEnumerable(enumerable));
+            }
+        }
+
+        enum NextFromEnum_enum {
+            One,
+            Two,
+            Three
+        }
+        [TestMethod]
+        public void NextFromEnum() {
+            var random = new System.Random();
+            foreach (var _ in Enumerable.Range(0, 100)) {
+                var output = random.NextFromEnum<NextFromEnum_enum>();
+                Assert.IsInstanceOfType(output, typeof(NextFromEnum_enum));
             }
         }
 
