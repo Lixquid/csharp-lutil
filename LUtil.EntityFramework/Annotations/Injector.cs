@@ -1,8 +1,10 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace LUtil.EntityFramework.Annotations {
     [PublicAPI]
@@ -17,15 +19,16 @@ namespace LUtil.EntityFramework.Annotations {
                 // OnDelete
                 foreach (var fk in entity.GetForeignKeys()) {
                     var behaviorAttribute = fk.Properties
-                        .Select(p => p.PropertyInfo.GetCustomAttribute<OnDeleteAttribute>())
+                        .Select(p => p.PropertyInfo.GetCustomAttribute<OnDeleteAttribute>(true))
                         .FirstOrDefault(p => p != null);
                     if (behaviorAttribute != null) {
                         fk.DeleteBehavior = behaviorAttribute.Behavior;
                     }
                 }
-                // Unique
+                var keyProperties = new List<(int order, IMutableProperty prop)>();
                 foreach (var prop in entity.GetProperties()) {
-                    var uniqueAttribute = prop.PropertyInfo.GetCustomAttribute<UniqueAttribute>();
+                    // Unique
+                    var uniqueAttribute = prop.PropertyInfo.GetCustomAttribute<UniqueAttribute>(true);
                     if (uniqueAttribute != null) {
                         if (uniqueAttribute.Columns.Any()) {
                             // Compound
@@ -38,6 +41,17 @@ namespace LUtil.EntityFramework.Annotations {
                             entity.AddIndex(prop).IsUnique = true;
                         }
                     }
+
+                    // CompoundKey
+                    var compoundKey = prop.PropertyInfo.GetCustomAttribute<CompoundKeyAttribute>(true);
+                    if (compoundKey != null) {
+                        keyProperties.Add((compoundKey.Order, prop));
+                    }
+                }
+
+                if (keyProperties.Count > 0) {
+                    keyProperties.Sort((a, b) => a.order.CompareTo(b.order));
+                    entity.SetPrimaryKey(keyProperties.Select(x => x.prop).ToList());
                 }
             }
         }
