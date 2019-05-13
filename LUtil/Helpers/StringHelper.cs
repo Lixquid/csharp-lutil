@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Text;
 using JetBrains.Annotations;
 using LUtil.Helpers.Extensions;
 
@@ -27,6 +28,17 @@ namespace LUtil.Helpers {
             input.ThrowIfNull(nameof(input));
             value.ThrowIfNull(nameof(value));
             return input.IndexOf(value, comparison) >= 0;
+        }
+
+        /// <summary>
+        ///     Repeats a string the specified number of times.
+        /// </summary>
+        /// <param name="input">The string to be repeated.</param>
+        /// <param name="count">The number of times to repeat the string.</param>
+        [Pure]
+        public static string Repeat([NotNull] string input, int count) {
+            input.ThrowIfNull(nameof(input));
+            return new StringBuilder(input.Length * count).Insert(0, input, count).ToString();
         }
     }
 }
