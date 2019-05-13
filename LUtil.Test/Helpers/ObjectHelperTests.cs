@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using LUtil.Helpers.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LUtil.Test.Helpers {
     [TestClass]
     public class ObjectHelperTests {
-        [TestMethod, ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
         public void ThrowIfNull() {
             // No Exception should be thrown
             var input = "value";
@@ -13,7 +13,7 @@ namespace LUtil.Test.Helpers {
 
             // ArgumentNullException should be thrown
             input = null;
-            input.ThrowIfNull(nameof(input));
+            Assert.ThrowsException<ArgumentNullException>(() => input.ThrowIfNull(nameof(input)));
         }
 
         [TestMethod]
